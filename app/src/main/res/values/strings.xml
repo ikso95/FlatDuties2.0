@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">StartActivity</string>
+    <string name="Sign_In">Sign In</string>
+    <string name="Sign_Up">Sign Up</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Forgot_password">Forgot password?</string>
+    <string name="Nick">Nick</string>
+</resources>

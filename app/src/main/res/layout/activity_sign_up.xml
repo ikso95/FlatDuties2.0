@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/email_editText_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="@string/Email"
+        android:textSize="20sp"
+        android:autofillHints="@string/Email"/>
+
+    <EditText
+        android:id="@+id/password_editText_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textVisiblePassword"
+        android:hint="@string/Password"
+        android:textSize="20sp"
+        android:autofillHints="@string/Password"/>
+
+    <EditText
+        android:id="@+id/nick_editText_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textAutoComplete"
+        android:hint="@string/Nick"
+        android:textSize="20sp"
+        android:autofillHints="@string/Nick"/>
+
+    <Button
+        android:id="@+id/sign_up_button_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Sign_Up"/>
+
+</LinearLayout>
