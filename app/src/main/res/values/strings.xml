@@ -6,4 +6,10 @@
     <string name="Password">Password</string>
     <string name="Forgot_password">Forgot password?</string>
     <string name="Nick">Nick</string>
+    <string name="Next">Next</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="Logout">Logout</string>
+    <string name="Settings">Settings</string>
+    <string name="Group">Group</string>
 </resources>

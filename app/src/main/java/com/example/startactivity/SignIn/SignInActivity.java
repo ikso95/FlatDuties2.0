@@ -1,13 +1,15 @@
-package com.example.startactivity;
+package com.example.startactivity.SignIn;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SignUpActivity extends AppCompatActivity {
+import com.example.startactivity.R;
+
+public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_in);
     }
 }

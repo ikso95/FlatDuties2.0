@@ -1,15 +1,23 @@
-package com.example.startactivity;
+package com.example.startactivity.Start;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.startactivity.Main.MainActivity;
+import com.example.startactivity.R;
+import com.example.startactivity.SignIn.SignInActivity;
+import com.example.startactivity.SignUp.SignUpActivity;
+
 public class StartActivity extends AppCompatActivity {
 
     private Button sign_in;
     private Button sign_up;
+    private Button next;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,19 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        next = (Button)findViewById(R.id.next_button_start);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        viewPager = (ViewPager)findViewById(R.id.instructions_gallery_viewPager_start);
+        ImageAdapter adapter = new ImageAdapter(this);
+        viewPager.setAdapter(adapter);
 
     }
 }

@@ -4,15 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StartActivity"
+    tools:context=".Start.StartActivity"
     android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/instructions_gallery_viewPager_start"
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+
+
+    </android.support.v4.view.ViewPager>
+
+
 
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_below="@id/instructions_gallery_viewPager_start"
+        android:layout_marginTop="25dp"
         >
 
 
@@ -34,6 +45,16 @@
             android:textAllCaps="false"
             android:layout_toEndOf="@+id/sign_in_button_start"
             android:layout_marginStart="20dp"/>
+
+        <Button
+            android:id="@+id/next_button_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Next"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:layout_below="@id/sign_in_button_start"
+            />
 
     </RelativeLayout>
 
