@@ -12,4 +12,5 @@
     <string name="Logout">Logout</string>
     <string name="Settings">Settings</string>
     <string name="Group">Group</string>
+    <string name="Password_min_length">Password must be at least 6 characters and contains min one digit</string>
 </resources>

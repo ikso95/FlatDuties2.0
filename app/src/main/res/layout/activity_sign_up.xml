@@ -26,6 +26,12 @@
         android:textSize="20sp"
         android:autofillHints="@string/Password"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Password_min_length"
+        android:paddingHorizontal="15dp"/>
+
     <EditText
         android:id="@+id/nick_editText_sign_up"
         android:layout_width="match_parent"
