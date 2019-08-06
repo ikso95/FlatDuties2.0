@@ -4,12 +4,22 @@ import android.widget.Toast;
 
 public class Password {
 
+
+
     private String password;
     private final int min_password_length = 5;
 
     public Password(String pass)
     {
         this.password=pass;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean isPasswordCorrect() {

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.example.myapplication.Model.User;
+import com.example.startactivity.Models.User;
 
 public class Common {
 

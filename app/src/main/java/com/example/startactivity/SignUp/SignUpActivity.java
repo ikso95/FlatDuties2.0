@@ -7,8 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.startactivity.DBConnection.DB_Query;
 import com.example.startactivity.Models.Email;
 import com.example.startactivity.Models.Password;
+import com.example.startactivity.Models.User;
 import com.example.startactivity.R;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -40,7 +42,9 @@ public class SignUpActivity extends AppCompatActivity {
                 if(mail.isEmailCorrect() && pass.isPasswordCorrect() && nick.getText()!=null)
                 {
                     Toast.makeText(SignUpActivity.this,"Signing up...",Toast.LENGTH_LONG).show();
-                    //registerNewUser();
+                    //register New User
+                    DB_Query db_query = new DB_Query(getBaseContext());
+                    db_query.registerNewUser(mail.getEmail(),pass.getPassword(),nick.getText().toString());
                 }
                 else
                 {

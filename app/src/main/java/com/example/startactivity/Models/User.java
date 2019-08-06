@@ -5,6 +5,7 @@ public class User {
     private int uzytkownikID;
     private String email;
     private String password;
+    //private Password password;
     private String nick;
     private int grupaID;
 
@@ -13,6 +14,7 @@ public class User {
         this.uzytkownikID = uzytkownikID;
         this.email = email;
         this.password = password;
+        //this.password.setPassword(password);
         this.nick = nick;
         this.grupaID = grupaID;
     }
