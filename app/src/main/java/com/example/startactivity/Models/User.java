@@ -7,16 +7,14 @@ public class User {
     private String password;
     //private Password password;
     private String nick;
-    private int grupaID;
+    private int groupID;
 
 
-    public User(int uzytkownikID, String email, String password, String nick, int grupaID) {
+    public User(int uzytkownikID, String email, String nick, int groupID) {
         this.uzytkownikID = uzytkownikID;
         this.email = email;
-        this.password = password;
-        //this.password.setPassword(password);
         this.nick = nick;
-        this.grupaID = grupaID;
+        this.groupID = groupID;
     }
 
     public User(String email, String password) {
@@ -57,12 +55,12 @@ public class User {
         this.nick = nick;
     }
 
-    public int getGrupaID() {
-        return grupaID;
+    public int getGroupID() {
+        return groupID;
     }
 
-    public void setGrupaID(int grupaID) {
-        this.grupaID = grupaID;
+    public void setGroupID(int grupaID) {
+        this.groupID = grupaID;
     }
 
 }

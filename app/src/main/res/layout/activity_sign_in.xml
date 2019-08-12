@@ -30,7 +30,7 @@
             android:id="@+id/password_editText_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
+            android:inputType="textPassword"
             android:hint="@string/Password"
             android:textSize="20sp"
             android:autofillHints="@string/Password"

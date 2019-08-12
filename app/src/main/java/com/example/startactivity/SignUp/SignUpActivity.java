@@ -1,18 +1,30 @@
 package com.example.startactivity.SignUp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.startactivity.Common.Common;
+import com.example.startactivity.Common.VolleySingleton;
 import com.example.startactivity.DBConnection.DB_Query;
 import com.example.startactivity.Models.BCrypt;
 import com.example.startactivity.Models.Email;
 import com.example.startactivity.Models.Password;
 import com.example.startactivity.R;
+import com.example.startactivity.SignIn.SignInActivity;
+
+import org.json.JSONObject;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -52,16 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
                     while(hashedPassword.contains("/"));
 
                     // register New User
-                    final String finalHashedPassword = hashedPassword;
-                    Thread mThread = new Thread() {
-                        @Override
-                        public void run() {
-                            DB_Query db_query = new DB_Query(getBaseContext());
-                            db_query.registerNewUser(mail.getEmail(), finalHashedPassword,nick.getText().toString());
-                        }
-                    };
-                    mThread.start();
-
+                    registerNewUser(email.getText().toString(),hashedPassword,nick.getText().toString());
 
 
                 }
@@ -83,5 +86,36 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
+    public void registerNewUser(String mail, String hashedPassword, String nick){
+        final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
+        mDialog.setMessage("Please wait...");
+        mDialog.show();
+
+        String url = Common.getUrl()+"signup/"+mail+"/"+hashedPassword+"/"+nick;
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        mDialog.dismiss();
+                        Toast.makeText(SignUpActivity.this, R.string.toast_user_registered, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                        startActivity(intent);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        mDialog.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(SignUpActivity.this, R.string.toast_connection_error, Toast.LENGTH_SHORT ).show();
+                        Log.d("ConnectionError", "Error: " + error.getMessage());
+                    }
+
+                });
+        RequestQueue queue =  VolleySingleton.getInstance(SignUpActivity.this.getApplicationContext()).getRequestQueue();
+        queue.add(jsonRequest);
+    }
 
 }
