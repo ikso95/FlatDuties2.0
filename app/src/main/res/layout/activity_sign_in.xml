@@ -9,25 +9,33 @@
     android:padding="10dp"
     >
 
-    <EditText
-        android:id="@+id/email_editText_sign_in"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="@string/Email"
-        android:textSize="20sp"
-        android:autofillHints="@string/Email"
-        />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/email_editText_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/Email"
+            android:textSize="20sp"
+            android:autofillHints="@string/Email"
+            />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/password_editText_sign_in"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textVisiblePassword"
-        android:hint="@string/Password"
-        android:textSize="20sp"
-        android:autofillHints="@string/Password"
-        />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/password_editText_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textVisiblePassword"
+            android:hint="@string/Password"
+            android:textSize="20sp"
+            android:autofillHints="@string/Password"
+            />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/sign_in_button_sign_in"

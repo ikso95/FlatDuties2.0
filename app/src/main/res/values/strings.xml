@@ -13,4 +13,6 @@
     <string name="Settings">Settings</string>
     <string name="Group">Group</string>
     <string name="Password_min_length">Password must be at least 6 characters and contains min one digit</string>
+    <string name="toast_user_registered">User registered</string>
+    <string name="toast_connection_error">Connection Error</string>
 </resources>

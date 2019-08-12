@@ -1,5 +1,6 @@
 package com.example.startactivity.SignUp;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.startactivity.DBConnection.DB_Query;
+import com.example.startactivity.Models.BCrypt;
 import com.example.startactivity.Models.Email;
 import com.example.startactivity.Models.Password;
-import com.example.startactivity.Models.User;
 import com.example.startactivity.R;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -37,14 +38,32 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Password pass = new Password(password.getText().toString());
-                Email mail = new Email(email.getText().toString());
+                final Email mail = new Email(email.getText().toString());
 
                 if(mail.isEmailCorrect() && pass.isPasswordCorrect() && nick.getText()!=null)
                 {
-                    Toast.makeText(SignUpActivity.this,"Signing up...",Toast.LENGTH_LONG).show();
-                    //register New User
-                    DB_Query db_query = new DB_Query(getBaseContext());
-                    db_query.registerNewUser(mail.getEmail(),pass.getPassword(),nick.getText().toString());
+                    //Toast.makeText(SignUpActivity.this,"Signing up...",Toast.LENGTH_LONG).show();
+
+                    String hashedPassword;
+                    //hashing users password using bcrypt, if contains "/" create new hash because this sign is not acceptable in our api path
+                    do {
+                         hashedPassword = BCrypt.hashpw(pass.getPassword(), BCrypt.gensalt(10));
+                    }
+                    while(hashedPassword.contains("/"));
+
+                    // register New User
+                    final String finalHashedPassword = hashedPassword;
+                    Thread mThread = new Thread() {
+                        @Override
+                        public void run() {
+                            DB_Query db_query = new DB_Query(getBaseContext());
+                            db_query.registerNewUser(mail.getEmail(), finalHashedPassword,nick.getText().toString());
+                        }
+                    };
+                    mThread.start();
+
+
+
                 }
                 else
                 {

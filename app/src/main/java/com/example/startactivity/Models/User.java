@@ -19,6 +19,11 @@ public class User {
         this.grupaID = grupaID;
     }
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
 
     public int getUzytkownikID() {
         return uzytkownikID;

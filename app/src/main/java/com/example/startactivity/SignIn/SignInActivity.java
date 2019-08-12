@@ -2,11 +2,14 @@ package com.example.startactivity.SignIn;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.startactivity.DBConnection.DB_Query;
+import com.example.startactivity.Models.BCrypt;
 import com.example.startactivity.Models.Email;
 import com.example.startactivity.Models.Password;
 import com.example.startactivity.R;
@@ -31,8 +34,55 @@ public class SignInActivity extends AppCompatActivity {
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Password pass = new Password(password.getText().toString());
+                String pass = password.getText().toString();
                 //if(pass.isPasswordCorrect())
+
+               //pobranie hashPassword konta o podanym mailu
+                final DB_Query db_query = new DB_Query(getBaseContext());
+
+                final String hashPassword ;
+
+                hashPassword = db_query.getUserHashPassword(email.getText().toString());
+
+
+
+
+                /*
+                Thread getHashThread = new Thread() {
+                    @Override
+                    public void run() {
+                         hashPassword[0] = db_query.getUserHashPassword(email.getText().toString());
+
+                    }
+                };
+                getHashThread.start();
+                try{
+                    getHashThread.join();
+                }
+                catch (Exception e){
+                    System.out.print(e);
+                }*/
+
+
+
+
+
+
+
+                /*if (BCrypt.checkpw(password.getText().toString(), hashPassword[0]))
+                    Toast.makeText(SignInActivity.this,"it matches",Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(SignInActivity.this,"it does not match",Toast.LENGTH_LONG).show();*/
+
+
+
+
+
+               //sprawdzenie wprowadzonego hasla z hashem poprawnego hasla
+
+               //jeżeli poprawne pobrać wszystkie dane użytkownika
+                //jeżeli nie wyświetlić komunikat
+
             }
         });
 
