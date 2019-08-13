@@ -15,4 +15,6 @@
     <string name="Password_min_length">Password must be at least 6 characters and contains min one digit</string>
     <string name="toast_user_registered">User registered</string>
     <string name="toast_connection_error">Connection Error</string>
+    <string name="finish">Finish</string>
+    <string name="back">Back</string>
 </resources>

@@ -1,20 +1,24 @@
 package com.example.startactivity.Start;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Main.MainActivity;
 import com.example.startactivity.Models.User;
 import com.example.startactivity.R;
-import com.example.startactivity.SignIn.SignInActivity;
-import com.example.startactivity.SignUp.SignUpActivity;
+import com.example.startactivity.Register_Login_activity;
+
 
 public class StartActivity extends AppCompatActivity {
 
@@ -27,48 +31,147 @@ public class StartActivity extends AppCompatActivity {
     private int uzytkownikID,grupaID;
     private String mail, nick;
 
+
+    private ViewPager mSlideViewPager;
+    private LinearLayout mDotLayout;
+    private SliderAdapter sliderAdapter;
+
+    private TextView[] mDots;
+
+    private Button nextButton;
+    private Button backButton;
+
+    private int mCurrentPage;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
 
-        isUserLoggedIn();
+        //isUserLoggedIn();
 
-        //przejście do ekranu logowania
-        sign_in = (Button) findViewById(R.id.sign_in_button_start);
-        sign_in.setOnClickListener(new View.OnClickListener() {
+
+        mSlideViewPager = (ViewPager)findViewById(R.id.slideViewPager_start);
+        mDotLayout = (LinearLayout) findViewById(R.id.dots_layout_start);
+
+        sliderAdapter = new SliderAdapter(this);
+
+        mSlideViewPager.setAdapter(sliderAdapter);
+
+        addDotsIndicator(0);
+
+        mSlideViewPager.addOnPageChangeListener(viewListener);
+
+
+
+        nextButton = (Button)findViewById(R.id.next_button_start);
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartActivity.this, SignInActivity.class);
-                startActivity(intent);
+                if(mCurrentPage==mDots.length-1)
+                {
+                    //go to registration and login activity
+                    Intent intent = new Intent(StartActivity.this, Register_Login_activity.class);
+                    startActivity(intent);
+
+                }
+                else
+                {
+                    mCurrentPage++;
+                    mSlideViewPager.setCurrentItem(getItem(1));
+                }
             }
         });
 
-        //przejscie do ekranu rejestracji
-        sign_up = (Button) findViewById(R.id.sign_up_button_start);
-        sign_up.setOnClickListener(new View.OnClickListener() {
+        backButton = (Button) findViewById(R.id.back_button_start);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                mSlideViewPager.setCurrentItem(getItem(-1));
+                mCurrentPage--;
             }
         });
+    }
 
-        next = (Button)findViewById(R.id.next_button_start);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        viewPager = (ViewPager)findViewById(R.id.instructions_gallery_viewPager_start);
-        ImageAdapter adapter = new ImageAdapter(this);
-        viewPager.setAdapter(adapter);
+
+    @SuppressLint("ResourceAsColor")
+    public void addDotsIndicator(int position){
+
+        //liczba kropek/ekranów
+        mDots = new TextView[3];
+        mDotLayout.removeAllViews();
+
+
+        for(int i=0; i<mDots.length; i++){
+
+            mDots[i]=new TextView(this);
+            mDots[i].setText(Html.fromHtml("&#8226;")); //mozna zastapic "." ale trzeba odpowiednio powiekrzyc
+            mDots[i].setTextSize(35);
+            mDots[i].setTextColor(R.color.colorTransparentWhite);
+
+            mDotLayout.addView(mDots[i]);
+        }
+
+        if(mDots.length>0)
+        {
+            mDots[position].setTextColor(R.color.colorWhite);
+            mDots[position].setTextSize(45);
+
+        }
 
     }
+
+    ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int i, float v, int i1) {
+
+        }
+
+        @Override
+        public void onPageSelected(int i) {
+            addDotsIndicator(i);
+            mCurrentPage = i;
+            if(i==0)
+            {
+                nextButton.setEnabled(true);
+                backButton.setEnabled(false);
+                backButton.setVisibility(View.INVISIBLE);
+                nextButton.setText(R.string.Next);
+                backButton.setText("");
+
+            }
+            else if(i== mDots.length - 1) {
+                nextButton.setEnabled(true);
+                backButton.setEnabled(true);
+                backButton.setVisibility(View.VISIBLE);
+                nextButton.setText(R.string.finish);
+                backButton.setText(R.string.back);
+            }
+            else
+            {
+                nextButton.setEnabled(true);
+                backButton.setEnabled(true);
+                backButton.setVisibility(View.VISIBLE);
+                nextButton.setText(R.string.Next);
+                backButton.setText(R.string.back);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int i) {
+
+        }
+    };
+
+    private int getItem(int i) {
+        return mSlideViewPager.getCurrentItem() + i;
+    }
+
 
     private void isUserLoggedIn() {
         preferences = getSharedPreferences("Login", MODE_PRIVATE);

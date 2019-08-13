@@ -17,12 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".Main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Register_Login_activity"></activity>
+        <activity
+            android:name=".Main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUp.SignUpActivity" />
         <activity android:name=".SignIn.SignInActivity" />
-        <activity android:name=".Start.StartActivity">
+        <activity
+            android:name=".Start.StartActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
