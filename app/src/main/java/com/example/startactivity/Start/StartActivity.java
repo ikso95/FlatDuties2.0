@@ -17,15 +17,11 @@ import com.example.startactivity.Common.Common;
 import com.example.startactivity.Main.MainActivity;
 import com.example.startactivity.Models.User;
 import com.example.startactivity.R;
-import com.example.startactivity.Register_Login_activity;
+import com.example.startactivity.SignIn.SignInActivity;
+import com.example.startactivity.SignUp.SignUpActivity;
 
 
 public class StartActivity extends AppCompatActivity {
-
-    private Button sign_in;
-    private Button sign_up;
-    private Button next;
-    private ViewPager viewPager;
 
     private SharedPreferences preferences;
     private int uzytkownikID,grupaID;
@@ -40,9 +36,11 @@ public class StartActivity extends AppCompatActivity {
 
     private Button nextButton;
     private Button backButton;
+    private Button sign_in;
+    private Button sign_up;
+
 
     private int mCurrentPage;
-
 
 
 
@@ -68,26 +66,18 @@ public class StartActivity extends AppCompatActivity {
 
 
 
-        nextButton = (Button)findViewById(R.id.next_button_start);
+        nextButton = (Button)findViewById(R.id.next_button_slide);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mCurrentPage==mDots.length-1)
-                {
-                    //go to registration and login activity
-                    Intent intent = new Intent(StartActivity.this, Register_Login_activity.class);
-                    startActivity(intent);
 
-                }
-                else
-                {
                     mCurrentPage++;
                     mSlideViewPager.setCurrentItem(getItem(1));
-                }
+
             }
         });
 
-        backButton = (Button) findViewById(R.id.back_button_start);
+        backButton = (Button) findViewById(R.id.back_button_slide);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +85,29 @@ public class StartActivity extends AppCompatActivity {
                 mCurrentPage--;
             }
         });
+
+        //przejście do ekranu logowania
+        sign_in = (Button) findViewById(R.id.sign_in_button_start);
+        sign_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, SignInActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //przejscie do ekranu rejestracji
+        sign_up = (Button) findViewById(R.id.sign_up_button_start);
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
 
@@ -141,24 +154,19 @@ public class StartActivity extends AppCompatActivity {
                 nextButton.setEnabled(true);
                 backButton.setEnabled(false);
                 backButton.setVisibility(View.INVISIBLE);
-                nextButton.setText(R.string.Next);
-                backButton.setText("");
-
+                nextButton.setVisibility(View.VISIBLE);
             }
             else if(i== mDots.length - 1) {
                 nextButton.setEnabled(true);
                 backButton.setEnabled(true);
-                backButton.setVisibility(View.VISIBLE);
-                nextButton.setText(R.string.finish);
-                backButton.setText(R.string.back);
+                nextButton.setVisibility(View.INVISIBLE);
             }
             else
             {
                 nextButton.setEnabled(true);
                 backButton.setEnabled(true);
                 backButton.setVisibility(View.VISIBLE);
-                nextButton.setText(R.string.Next);
-                backButton.setText(R.string.back);
+                nextButton.setVisibility(View.VISIBLE);
             }
         }
 

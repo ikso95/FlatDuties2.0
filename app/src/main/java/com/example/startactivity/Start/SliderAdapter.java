@@ -6,6 +6,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,22 +27,19 @@ public class SliderAdapter extends PagerAdapter {
     public int[] slide_images={
             R.drawable.ic_mood,
             R.drawable.ic_local_laundry_service,
-            R.drawable.ic_local_grocery_store,
-
+            R.drawable.ic_local_grocery_store
     };
 
     public String[] slide_heading={
             "Welcome!",
             "Share duties",
-            "Make shopping lists",
-
+            "Make shopping lists"
     };
 
     public String[] slide_descs={
             "We are happy that you have downloaded our app. You are only a few steps away from using it!",
             "The application allows you to manage your household duties.",
-            "Create shopping lists with your flat mates.",
-
+            "Create shopping lists with your flat mates."
     };
 
 
