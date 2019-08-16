@@ -3,6 +3,7 @@ package com.example.startactivity.Start;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,6 +64,28 @@ public class StartActivity extends AppCompatActivity {
         addDotsIndicator(0);
 
         mSlideViewPager.addOnPageChangeListener(viewListener);
+
+
+        //automatyczne czasowe przesuwanie się slajdów co określony okres czasu
+        //po przejsciu wszystkich okien wraca spowrotem do pierwszego slajdu
+        final Handler refreshHandler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mCurrentPage++;
+                if(mCurrentPage==3)
+                {
+                    mCurrentPage=0;
+                    mSlideViewPager.setCurrentItem(getItem(-3));
+                }
+                else
+                {
+                    mSlideViewPager.setCurrentItem(getItem(1));
+                }
+                refreshHandler.postDelayed(this,  5000);
+            }
+        };
+        refreshHandler.postDelayed(runnable, 5000);
 
 
 
