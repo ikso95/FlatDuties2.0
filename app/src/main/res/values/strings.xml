@@ -17,4 +17,16 @@
     <string name="toast_connection_error">Connection Error</string>
     <string name="finish">Finish</string>
     <string name="back">Back</string>
+    <string name="Old_password">Old Password</string>
+    <string name="New_password">New password</string>
+    <string name="Repeat_new_password">Repeat new password</string>
+    <string name="Change_password">Change password</string>
+    <string name="New_Email">New email</string>
+    <string name="Change_email">Change email</string>
+    <string name="New_Nick">New nick</string>
+    <string name="Change_nick">Change nick</string>
+    <string name="New_email_is_incorrect">New email is incorrect</string>
+    <string name="email_changed">Email has been changed</string>
+    <string name="nick_changed">nickname has been changed</string>
+    <string name="password_changed">Password have been changed</string>
 </resources>

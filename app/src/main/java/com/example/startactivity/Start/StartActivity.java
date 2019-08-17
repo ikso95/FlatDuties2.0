@@ -51,7 +51,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
 
-        //isUserLoggedIn();
+        isUserLoggedIn();
 
 
         mSlideViewPager = (ViewPager)findViewById(R.id.slideViewPager_start);

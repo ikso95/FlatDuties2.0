@@ -53,35 +53,9 @@ public class SignInActivity extends AppCompatActivity {
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pass = password.getText().toString();
-
 
                //pobranie hashPassword konta o podanym mailu
-                final DB_Query db_query = new DB_Query(getBaseContext());
-
-                final String[] hashPassword = new String[1];
-
-                hashPassword[0] = db_query.getUserHashPassword(email.getText().toString());
-
                 getUserHashPassword(email.getText().toString());
-
-
-
-
-
-                /*if (BCrypt.checkpw(password.getText().toString(), hashPassword[0]))
-                    Toast.makeText(SignInActivity.this,"it matches",Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(SignInActivity.this,"it does not match",Toast.LENGTH_LONG).show();*/
-
-
-
-
-
-               //sprawdzenie wprowadzonego hasla z hashem poprawnego hasla
-
-               //jeżeli poprawne pobrać wszystkie dane użytkownika
-                //jeżeli nie wyświetlić komunikat
 
             }
         });
@@ -157,7 +131,7 @@ public class SignInActivity extends AppCompatActivity {
             signIn(email.getText().toString());
         }
         else
-            Toast.makeText(SignInActivity.this,"Password incorrect",Toast.LENGTH_LONG).show();
+            password.setError("Wrong Password");
 
     }
 

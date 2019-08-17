@@ -3,29 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-
-
     <item
         android:id="@+id/nav_group_drawer"
-        android:icon="@drawable/ic_menu_camera"
+        android:icon="@drawable/ic_group"
         android:title="@string/Group" />
 
     <item android:title="Communicate">
         <menu>
-            <group android:checkableBehavior="single">
-
 
                 <item
                     android:id="@+id/nav_settings_drawer"
-                    android:icon="@drawable/ic_menu_send"
+                    android:icon="@drawable/ic_menu_manage"
                     android:title="@string/Settings" />
 
                 <item
                     android:id="@+id/nav_logout_drawer2"
-                    android:icon="@drawable/ic_menu_manage"
+                    android:icon="@drawable/ic_action_exit"
                     android:title="@string/Logout" />
 
-            </group>
         </menu>
     </item>
 

@@ -1,10 +1,12 @@
 package com.example.startactivity.Main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,11 +15,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.startactivity.Activities.Activity_fragment;
+import com.example.startactivity.Common.Common;
 import com.example.startactivity.R;
 import com.example.startactivity.Shopping.Shopping_fragment;
 import com.example.startactivity.Start.StartActivity;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SectionsPageAdapter msectionsPageAdapter;
     private ViewPager mViewPager;
 
-    private FloatingActionButton add_duty;
 
 
     @Override
@@ -33,10 +39,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        //toolbar settings
         Toolbar toolbar = findViewById(R.id.toolbar_appBarMain);
         setSupportActionBar(toolbar);
 
+        //drawer implementation
         DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout_main);
         NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view_main);
 
@@ -44,6 +51,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        //przypisanie nicku i maila w headerze nav bara
+        View header = navigationView.getHeaderView(0);
+        TextView nick = (TextView)header.findViewById(R.id.userNick_header);
+        nick.setText(Common.currentUser.getNick());
+        TextView mail = (TextView)header.findViewById(R.id.userEmail_header);
+        mail.setText(Common.currentUser.getEmail());
+
+
+
+
+
+
 
         //tabs settings
         msectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
@@ -53,15 +75,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs_TabLayout_appBarMain);
         tabLayout.setupWithViewPager(mViewPager);
 
-        add_duty = (FloatingActionButton)findViewById(R.id.add_duty_floatingButton_activity_fragment);
 
-        /*add_duty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, StartActivity.class);
-                startActivity(intent);
-            }
-        });*/
+
+
+
 
 
 
@@ -73,11 +90,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter.addFragment(new Activity_fragment(),"Duties");
         adapter.addFragment(new Shopping_fragment(),"Shopping");
         viewPager.setAdapter(adapter);
-
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_group_drawer) {
+            //Intent intent = new Intent(MainActivity.this, Add_or_join_group.class);
+            //startActivity(intent);
+        } else if (id == R.id.nav_settings_drawer) {
+            Intent intent = new Intent(MainActivity.this, Settings.class);
+            startActivity(intent);
+
+        } else if (id == R.id.nav_logout_drawer2) {
+            logout();
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_main);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void logout() {
+        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences preferences = getSharedPreferences("Login", MODE_PRIVATE);
+        preferences.edit().clear().commit();
+        Intent intent = new Intent(MainActivity.this, StartActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

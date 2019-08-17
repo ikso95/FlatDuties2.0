@@ -70,13 +70,11 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    String message = "Incorrect: ";
 
-                    if(!mail.isEmailCorrect()){message=message + "email ";}
-                    if(!pass.isPasswordCorrect()){message = message+ "password ";}
-                    if(nick.length()==0){message = message+ "nick";}
+                    if(!mail.isEmailCorrect()){email.setError("Incorrect Email");}
+                    if(!pass.isPasswordCorrect()){password.setError("Incorrect Password");}
+                    if(nick.length()==0){nick.setError("Incorrect Nick");}
 
-                    Toast.makeText(SignUpActivity.this,message,Toast.LENGTH_LONG).show();
                     email.setFocusable(true);
                 }
 

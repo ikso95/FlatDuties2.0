@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Main.Settings"></activity>
         <activity
             android:name=".Main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
