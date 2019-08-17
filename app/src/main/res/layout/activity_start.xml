@@ -14,7 +14,7 @@
         android:id="@+id/slideViewPager_start"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/blurred_background_design_1107_219"
+        android:background="@color/colorWhite"
         tools:visibility="invisible">
 
 
@@ -62,7 +62,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="10dp"
-        android:background="@drawable/ic_arrow_forward"
+        android:background="@drawable/ic_arrow_forward_blue"
         android:visibility="visible" />
 
     <Button
@@ -72,7 +72,7 @@
         android:layout_alignStart="@+id/slideViewPager_start"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/ic_arrow_back"
+        android:background="@drawable/ic_arrow_back_blue"
         android:visibility="invisible"
         />
 
