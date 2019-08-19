@@ -43,4 +43,6 @@
     <string name="Join_flatmates">Join flatmates!</string>
     <string name="header_first_group">Connect with flatmates!</string>
     <string name="Description_first_group">Join an existing group or create one for your apartment.</string>
+    <string name="Join_group_more_info">If you don\'t remember group name, you can search it using following data (only if you provided this data then creating group)</string>
+    <string name="Join_group_with_group_name">If you remember group name, and password you can easly join group only with these data</string>
 </resources>

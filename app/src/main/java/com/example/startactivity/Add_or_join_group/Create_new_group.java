@@ -67,6 +67,7 @@ public class Create_new_group extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_group);
+        setTitle(R.string.Create_and_join);
 
 
         group_name = (EditText)findViewById(R.id.new_group_name_editText_group);

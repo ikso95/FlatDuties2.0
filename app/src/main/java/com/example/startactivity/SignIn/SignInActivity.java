@@ -54,6 +54,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        setTitle(R.string.Sign_In);
 
         email = (EditText)findViewById(R.id.email_editText_sign_in);
         password = (EditText)findViewById(R.id.password_editText_sign_in);
