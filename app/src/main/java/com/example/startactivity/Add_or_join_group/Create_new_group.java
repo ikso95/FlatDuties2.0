@@ -32,6 +32,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/*
+sprawdzam czy wszystkie inputy sa ok,
+czy haslo ma min 6 znakow w tym 1 cyfre, czy sa ze soba zgodne
+sprawdzam czy nazwa wybrana przez uzytkownika jest wolna jak tak to
+hasuje haslo
+dodaje grupe do bazy w zaleznosc jakie pola sa wypelnione
+    nazwa,haslo
+    nazwa,haslo,miasto,ulica,nr domu
+    nazwa,haslo,miasto,ulica,nr domu, nr mieszkania
+przypisuje grupe do obecnego uzytkownika i aktualizuje grupaID uzytkownika z baza danych
+
+*/
 public class Create_new_group extends AppCompatActivity {
 
     private EditText group_name;

@@ -73,10 +73,10 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void run() {
                 mCurrentPage++;
-                if(mCurrentPage==3)
+                if(mCurrentPage==4)
                 {
                     mCurrentPage=0;
-                    mSlideViewPager.setCurrentItem(getItem(-3));
+                    mSlideViewPager.setCurrentItem(getItem(-4));
                 }
                 else
                 {
@@ -139,7 +139,7 @@ public class StartActivity extends AppCompatActivity {
     public void addDotsIndicator(int position){
 
         //liczba kropek/ekranów
-        mDots = new TextView[3];
+        mDots = new TextView[4];
         mDotLayout.removeAllViews();
 
 

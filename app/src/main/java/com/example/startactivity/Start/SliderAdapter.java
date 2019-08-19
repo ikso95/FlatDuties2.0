@@ -26,20 +26,23 @@ public class SliderAdapter extends PagerAdapter {
 
     public int[] slide_images={
             R.drawable.person,
+            R.drawable.group2,
             R.drawable.broom,
             R.drawable.cart
     };
 
     public String[] slide_heading={
             "Welcome!",
+            "Join group",
             "Share duties",
             "Make shopping lists"
     };
 
     public String[] slide_descs={
             "We are happy that you have downloaded our app. You are only a few steps away from using it!",
+            "Create a group and invite your roommates to join",
             "The application allows you to manage your household duties.",
-            "Create shopping lists with your flat mates."
+            "Create and share shopping lists with your flat mates."
     };
 
 
