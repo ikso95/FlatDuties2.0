@@ -26,7 +26,7 @@ public class StartActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private int uzytkownikID,grupaID;
-    private String mail, nick;
+    private String mail, nick, groupName;
 
 
     private ViewPager mSlideViewPager;
@@ -210,8 +210,11 @@ public class StartActivity extends AppCompatActivity {
         mail=preferences.getString("Email","");
         nick=preferences.getString("Nick","");
         grupaID=preferences.getInt("GroupID",0);
+        groupName=preferences.getString("GroupName","");
 
-        User u = new User(uzytkownikID,mail, nick, grupaID);
+
+
+        User u = new User(uzytkownikID,mail, nick, grupaID,groupName);
         Common.currentUser=u;
 
         if(uzytkownikID!=0) //jeżeli zostały odczytane poprawne dane, wartosc 0 jest domyślnie ustawiana, w bazie nie ma takiego rekordu

@@ -33,6 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.jar.Attributes;
+
 
 /*
 po kliknieciu zaloguj pobieram z bazy hash hasła przypisanego do podanego emaila
@@ -88,9 +90,6 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
 
@@ -136,17 +135,17 @@ public class SignInActivity extends AppCompatActivity {
 
         if (BCrypt.checkpw(password.getText().toString(), s))
         {
-            signIn(email.getText().toString());
+            signIn();
         }
         else
             password.setError("Wrong Password");
 
     }
 
-    private void signIn(String email) {
+    private void signIn() {
 
         //ustawienie url zgodnego z api
-        String url = Common.getUrl()+"signIn/"+email;
+        String url = Common.getUrl()+"signIn/"+email.getText().toString();
 
         //pobranie danych z bazy w formie jsona
         JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -162,8 +161,10 @@ public class SignInActivity extends AppCompatActivity {
                             String mail = jsonObject.getString("Email");
                             String nick = jsonObject.getString("Nick");
                             int groupID = jsonObject.getInt("GroupID");
+                            String groupName = jsonObject.getString("Name");
 
-                            Common.currentUser = new User(userID,mail,nick,groupID);
+
+                            Common.currentUser = new User(userID,mail,nick,groupID,groupName);
 
                             mPreferences=getSharedPreferences("Login", MODE_PRIVATE);
                             mEditor=mPreferences.edit();
@@ -172,6 +173,7 @@ public class SignInActivity extends AppCompatActivity {
                             mEditor.putString("Email",Common.currentUser.getEmail());
                             mEditor.putString("Nick",Common.currentUser.getNick());
                             mEditor.putInt("GroupID",Common.currentUser.getGroupID());
+                            mEditor.putString("GroupName",Common.currentUser.getGroupName());
                             //zapisanie danych
                             mEditor.commit();
 

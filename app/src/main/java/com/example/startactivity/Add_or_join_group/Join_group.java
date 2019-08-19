@@ -35,14 +35,10 @@ public class Join_group extends AppCompatActivity {
 
     private EditText group_name;
     private EditText password1;
-    private EditText city;
-    private EditText street;
-    private EditText houseNr;
-    private EditText flatNr;
-    private EditText password2;
+
 
     private Button join1;
-    private Button join2;
+
 
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
@@ -86,19 +82,9 @@ public class Join_group extends AppCompatActivity {
             }
         });
 
-        city = (EditText)findViewById(R.id.city_editText_join_group);
-        street = (EditText)findViewById(R.id.street_editText_join_group);
-        houseNr = (EditText)findViewById(R.id.house_nr_editText_join_group);
-        flatNr = (EditText)findViewById(R.id.flat_number_editText_join_group);
-        password2 = (EditText)findViewById(R.id.group_password_2_editText_join_group);
-        join2 = (Button)findViewById(R.id.join_2_button_join_group);
 
-        join2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+
 
     }
 
@@ -237,6 +223,8 @@ public class Join_group extends AppCompatActivity {
                             mPreferences=getSharedPreferences("Login", MODE_PRIVATE);
                             mEditor=mPreferences.edit();
                             mEditor.putInt("GroupID",Common.currentUser.getGroupID());
+                            mEditor.putString("GroupName",Common.currentUser.getGroupName());
+
                             //zapisanie danych
                             mEditor.commit();
 
@@ -268,7 +256,7 @@ public class Join_group extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         mDialog.dismiss();
-                        //Toast.makeText(Join_group.this, R.string.new_group_created, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Join_group.this,"test",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Join_group.this, MainActivity.class);
                         startActivity(intent);
 
@@ -289,6 +277,10 @@ public class Join_group extends AppCompatActivity {
 
 
     }
+
+
+
+
 
 
 }

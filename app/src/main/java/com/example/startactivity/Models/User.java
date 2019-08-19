@@ -15,6 +15,14 @@ public class User {
 
 
 
+    public User(int uzytkownikID, String email, String nick, int groupID, String groupName) {
+        this.uzytkownikID = uzytkownikID;
+        this.email = email;
+        this.nick = nick;
+        this.groupID = groupID;
+        this.groupName = groupName;
+    }
+
     public User(int uzytkownikID, String email, String nick, int groupID) {
         this.uzytkownikID = uzytkownikID;
         this.email = email;

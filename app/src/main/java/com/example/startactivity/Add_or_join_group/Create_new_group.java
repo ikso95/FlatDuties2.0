@@ -49,10 +49,6 @@ public class Create_new_group extends AppCompatActivity {
     private EditText group_name;
     private EditText group_password;
     private EditText group_repeated_password;
-    private EditText group_city;
-    private EditText group_street;
-    private EditText group_house_nr;
-    private EditText group_flat_nr;
 
     private Button create_and_join_group;
 
@@ -73,10 +69,7 @@ public class Create_new_group extends AppCompatActivity {
         group_name = (EditText)findViewById(R.id.new_group_name_editText_group);
         group_password = (EditText)findViewById(R.id.new_group_password_editText_group);
         group_repeated_password = (EditText)findViewById(R.id.repeat_new_group_password_editText_group);
-        group_city = (EditText)findViewById(R.id.city_editText_group);
-        group_street = (EditText) findViewById(R.id.street_editText_group);
-        group_house_nr = (EditText)findViewById(R.id.house_nr_editText_group);
-        group_flat_nr = (EditText)findViewById(R.id.flat_number_editText_group);
+
 
         create_and_join_group = (Button)findViewById(R.id.create_and_join_button_group);
 
@@ -203,27 +196,9 @@ public class Create_new_group extends AppCompatActivity {
         }
         while(hashedPassword.contains("/"));
 
-        if(group_city.getText().toString().length()==0
-            && group_street.getText().toString().length()==0
-                && group_house_nr.getText().toString().length()==0
-                    && group_flat_nr.getText().toString().length()==0)
-        {
+
             create_and_join_group(hashedPassword);
-        }
-        else if (group_city.getText().toString().length()!=0
-                && group_street.getText().toString().length()!=0
-                && group_house_nr.getText().toString().length()!=0
-                && group_flat_nr.getText().toString().length()==0)
-        {
-            create_and_join_groupV2(hashedPassword);
-        }
-        else if (group_city.getText().toString().length()!=0
-                && group_street.getText().toString().length()!=0
-                && group_house_nr.getText().toString().length()!=0
-                && group_flat_nr.getText().toString().length()!=0)
-        {
-            create_and_join_groupV3(hashedPassword);
-        }
+
 
     }
 
@@ -257,61 +232,6 @@ public class Create_new_group extends AppCompatActivity {
         queue.add(jsonRequest);
     }
 
-    private void create_and_join_groupV2(String password) {
-
-        String url = Common.getUrl()+"createNewGroup/"+group_name.getText().toString()+"/"+password+"/"+group_city.getText().toString()+"/"+group_street.getText().toString()+"/"+group_house_nr.getText().toString();
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Toast.makeText(Create_new_group.this, R.string.new_group_created, Toast.LENGTH_SHORT).show();
-                        join_group();
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(Create_new_group.this, R.string.toast_connection_error, Toast.LENGTH_SHORT ).show();
-                        Log.d("ConnectionError", "Error: " + error.getMessage());
-                    }
-
-                });
-        RequestQueue queue =  VolleySingleton.getInstance(Create_new_group.this.getApplicationContext()).getRequestQueue();
-        queue.add(jsonRequest);
-
-
-    }
-
-    private void create_and_join_groupV3(String password) {
-
-        String url = Common.getUrl()+"createNewGroup/"+group_name.getText().toString()+"/"+password+"/"+group_city.getText().toString()+"/"+group_street.getText().toString()+"/"+group_house_nr.getText().toString()+"/"+group_flat_nr.getText().toString();
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Toast.makeText(Create_new_group.this, R.string.new_group_created, Toast.LENGTH_SHORT).show();
-                        join_group();
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(Create_new_group.this, R.string.toast_connection_error, Toast.LENGTH_SHORT ).show();
-                        Log.d("ConnectionError", "Error: " + error.getMessage());
-                    }
-
-                });
-        RequestQueue queue =  VolleySingleton.getInstance(Create_new_group.this.getApplicationContext()).getRequestQueue();
-        queue.add(jsonRequest);
-    }
 
     private void join_group() {
 
@@ -336,6 +256,7 @@ public class Create_new_group extends AppCompatActivity {
                             mPreferences=getSharedPreferences("Login", MODE_PRIVATE);
                             mEditor=mPreferences.edit();
                             mEditor.putInt("GroupID",Common.currentUser.getGroupID());
+                            mEditor.putString("GroupName",Common.currentUser.getGroupName());
                             //zapisanie danych
                             mEditor.commit();
 
