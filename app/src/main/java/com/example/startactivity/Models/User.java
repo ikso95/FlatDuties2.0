@@ -8,6 +8,11 @@ public class User {
     //private Password password;
     private String nick;
     private int groupID;
+    private String groupName = "in any group";
+
+
+
+
 
 
     public User(int uzytkownikID, String email, String nick, int groupID) {
@@ -61,6 +66,14 @@ public class User {
 
     public void setGroupID(int grupaID) {
         this.groupID = grupaID;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
 }

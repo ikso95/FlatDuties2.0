@@ -17,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.startactivity.Add_or_join_group.First_use_add_or_join_group;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Common.VolleySingleton;
 import com.example.startactivity.DBConnection.DB_Query;
@@ -32,6 +33,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+/*
+po kliknieciu zaloguj pobieram z bazy hash hasła przypisanego do podanego emaila
+porównuje z hashem wpisanego przez urzytkownika hasła
+jezeli jest ok pobieram reszte danych z bazy zapisuje do sharedprefferences i loguje
+
+
+*/
 public class SignInActivity extends AppCompatActivity {
 
     private EditText email;
@@ -84,7 +93,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-    public String getUserHashPassword(final String email)
+    public void getUserHashPassword(final String email)
     {
         final String[] hashPassword = new String[1];
 
@@ -118,10 +127,8 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
 
-        String hash = hashPassword[0];
-        VolleySingleton.getInstance(SignInActivity.this).addToRequestQueue(jsonRequest);
 
-        return hashPassword[0];
+        VolleySingleton.getInstance(SignInActivity.this).addToRequestQueue(jsonRequest);
     }
 
     private void isPasswordCorrect(String s) {
@@ -169,8 +176,17 @@ public class SignInActivity extends AppCompatActivity {
 
                             Toast.makeText(SignInActivity.this, "Log in succesful", Toast.LENGTH_SHORT).show();
 
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            //jezeli pierwsze logowanie przenies do activity wyboru grupy
+                            if(Common.currentUser.getGroupID()==0)
+                            {
+                                Intent intent = new Intent(SignInActivity.this, First_use_add_or_join_group.class);
+                                startActivity(intent);
+                            }
+                            else    //jezeli juz ma przypisana grupe kontynuuj normalnie
+                            {
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

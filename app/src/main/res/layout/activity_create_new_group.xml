@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".Add_or_join_group.Create_new_group"
     android:orientation="vertical"
-    tools:context=".Main.Settings"
     android:padding="10dp">
 
     <LinearLayout
@@ -13,17 +13,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/oldPassword_editText_settings"
+                android:id="@+id/new_group_name_editText_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/Old_password"
+                android:inputType="textCapSentences"
+                android:hint="@string/Group_name"
                 android:textSize="20sp"
                 />
         </android.support.design.widget.TextInputLayout>
@@ -31,86 +30,97 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/newPassword_editText_settings"
+                android:id="@+id/new_group_password_editText_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="@string/New_password"
+                android:hint="@string/Password"
                 android:textSize="20sp"
-                android:autofillHints="@string/New_password"/>
+                />
         </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Password_min_length"
-            android:paddingHorizontal="15dp"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/repeatNewPssword_editText_settings"
+                android:id="@+id/repeat_new_group_password_editText_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/Repeat_new_password"
                 android:textSize="20sp"
-                android:autofillHints="@string/Repeat_new_password"/>
+                />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/changePassword_button_settings"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Change_password"
-            />
-
+            android:text="@string/Optional_group_data"/>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/newEmail_editText_settings"
+                android:id="@+id/city_editText_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/New_Email"
+                android:inputType="textCapSentences"
+                android:hint="@string/City"
                 android:textSize="20sp"
-                android:autofillHints="@string/New_Email"/>
+                />
         </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/changeEmail_button_setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Change_email"
-            />
-
-
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/newNick_editText_settings"
+                android:id="@+id/street_editText_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/New_Nick"
+                android:inputType="textCapWords"
+                android:hint="@string/Street"
                 android:textSize="20sp"
-                android:autofillHints="@string/New_Email"/>
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/house_nr_editText_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textAutoComplete"
+                android:hint="@string/House_number"
+                android:textSize="20sp"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/flat_number_editText_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textAutoComplete"
+                android:hint="@string/Flat_number"
+                android:textSize="20sp"
+                />
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/changeNick_button_setting"
+            android:id="@+id/create_and_join_button_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Change_nick"
-            />
-
+            android:text="@string/Create_and_join"/>
 
     </LinearLayout>
-
 </ScrollView>

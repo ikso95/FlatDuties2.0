@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignIn.SignInActivity"
+    tools:context=".Add_or_join_group.Join_group"
     android:orientation="vertical"
     android:padding="10dp"
     >
@@ -14,45 +14,52 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Join group using group name"/>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/email_editText_sign_in"
+                android:id="@+id/group_name_editText_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/Email"
+                android:inputType="textCapSentences"
+                android:hint="@string/Group_name"
                 android:textSize="20sp"
-                android:autofillHints="@string/Email"
                 />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
-                android:id="@+id/password_editText_sign_in"
+                android:id="@+id/group_password_editText_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="@string/Password"
                 android:textSize="20sp"
-                android:autofillHints="@string/Password"
                 />
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/sign_in_button_sign_in"
+            android:id="@+id/join_group_button_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Sign_In"/>
+            android:text="@string/Join_group"
+            />
 
-        <Button
-            android:id="@+id/forgot_password_button_sign_in"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Forgot_password"/>
+            android:text="Join group using group data"/>
 
     </LinearLayout>
+
+
 </ScrollView>

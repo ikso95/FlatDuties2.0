@@ -17,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Main.Settings"></activity>
+        <activity android:name=".Add_or_join_group.First_use_add_or_join_group"></activity>
+        <activity android:name=".Add_or_join_group.Create_new_group" />
+        <activity android:name=".Add_or_join_group.Join_group" />
+        <activity android:name=".Main.Settings" />
         <activity
             android:name=".Main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />

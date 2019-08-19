@@ -2,8 +2,6 @@ package com.example.startactivity.Main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -15,16 +13,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.startactivity.Activities.Activity_fragment;
+import com.example.startactivity.Add_or_join_group.Create_new_group;
+import com.example.startactivity.Add_or_join_group.Join_group;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.R;
 import com.example.startactivity.Shopping.Shopping_fragment;
 import com.example.startactivity.Start.StartActivity;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nick.setText(Common.currentUser.getNick());
         TextView mail = (TextView)header.findViewById(R.id.userEmail_header);
         mail.setText(Common.currentUser.getEmail());
+        TextView groupName = (TextView)header.findViewById(R.id.userGroupName_header);
+        groupName.setText(Common.currentUser.getGroupName());
 
 
 
@@ -92,16 +91,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setAdapter(adapter);
     }
 
+
+    //ustawienia menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_group_drawer) {
-            //Intent intent = new Intent(MainActivity.this, Add_or_join_group.class);
-            //startActivity(intent);
-        } else if (id == R.id.nav_settings_drawer) {
+        if (id == R.id.join_group_drawer) {
+            Intent intent = new Intent(MainActivity.this, Join_group.class);
+            startActivity(intent);
+        } else if (id == R.id.create_new_group_drawer) {
+            Intent intent = new Intent(MainActivity.this, Create_new_group.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_settings_drawer) {
             Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
 

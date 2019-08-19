@@ -27,6 +27,17 @@
     <string name="Change_nick">Change nick</string>
     <string name="New_email_is_incorrect">New email is incorrect</string>
     <string name="email_changed">Email has been changed</string>
-    <string name="nick_changed">nickname has been changed</string>
+    <string name="nick_changed">Nickname has been changed</string>
     <string name="password_changed">Password have been changed</string>
+    <string name="Group_name">Group name</string>
+    <string name="Join_group">Join group</string>
+    <string name="City">City</string>
+    <string name="Street">Street</string>
+    <string name="House_number">House nr</string>
+    <string name="Flat_number">Flat nr</string>
+    <string name="Create_and_join">Create and join new group</string>
+    <string name="Create_group">Create new group</string>
+    <string name="Optional_group_data">The rest of the information is optional, but it will allow other members to find the group more easily in the future</string>
+    <string name="new_group_created">New group created</string>
+    <string name="Repeat_password">Repeat password</string>
 </resources>

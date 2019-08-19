@@ -3,7 +3,7 @@ package com.example.startactivity.Models;
 public class Group {
 
     private int grupaID;
-    private String name;
+    private String name = "in any group";
     private String password;
     private String city;
     private String road;

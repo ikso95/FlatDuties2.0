@@ -2,6 +2,8 @@ package com.example.startactivity.SignUp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,12 +26,29 @@ import com.example.startactivity.Models.Password;
 import com.example.startactivity.R;
 import com.example.startactivity.SignIn.SignInActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+
+/*
+sprawdzam czy email zawiera @, czy haslo ma 6 znakow w tym 1 liczbe i czy wprowadzone hasla sa identyczne
+jezeli tak
+    hashuje haslo
+    sprawdzam czy w bazie nie ma uzytkownika o podanym email
+    jezeli nie
+        rejestruje nowego uzytkownika
+    jezeli tak
+        zwracam informacje ze email jest w uzyciu
+jezeli nie
+    informuje o bledach
+
+*/
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText email;
     private EditText password;
+    private EditText repeat_password;
     private EditText nick;
     private Button sign_up_button;
 
@@ -41,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         email = (EditText)findViewById(R.id.email_editText_sign_up);
         password = (EditText)findViewById(R.id.password_editText_sign_up);
+        repeat_password = (EditText)findViewById(R.id.repeated_password_edittext_sign_up);
         nick = (EditText)findViewById(R.id.nick_editText_sign_up);
 
         //registration process, check data and if good register
@@ -50,9 +70,11 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Password pass = new Password(password.getText().toString());
+                Password rpass = new Password(repeat_password.getText().toString());
                 final Email mail = new Email(email.getText().toString());
 
-                if(mail.isEmailCorrect() && pass.isPasswordCorrect() && nick.getText()!=null)
+                if(mail.isEmailCorrect() && pass.isPasswordCorrect() && rpass.isPasswordCorrect()
+                        && nick.getText()!=null && password.getText().toString().equals(repeat_password.getText().toString()))
                 {
                     //Toast.makeText(SignUpActivity.this,"Signing up...",Toast.LENGTH_LONG).show();
 
@@ -64,7 +86,9 @@ public class SignUpActivity extends AppCompatActivity {
                     while(hashedPassword.contains("/"));
 
                     // register New User
-                    registerNewUser(email.getText().toString(),hashedPassword,nick.getText().toString());
+
+                    isUserRegistered(hashedPassword);
+
 
 
                 }
@@ -73,6 +97,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                     if(!mail.isEmailCorrect()){email.setError("Incorrect Email");}
                     if(!pass.isPasswordCorrect()){password.setError("Incorrect Password");}
+                    if(!rpass.isPasswordCorrect()){repeat_password.setError("Incorrect Password");}
+                    if(!password.getText().toString().equals(repeat_password.getText().toString()))
+                    {
+                        password.setError("Passwords do not match");
+                        repeat_password.setError("Passwords do not match");
+                    }
                     if(nick.length()==0){nick.setError("Incorrect Nick");}
 
                     email.setFocusable(true);
@@ -82,6 +112,48 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    private void isUserRegistered(final String hashedPassword) {
+
+        //ustawienie url zgodnego z api
+        String url = Common.getUrl()+"isUserRegistered2/"+email.getText().toString();
+
+        //pobranie danych z bazy w formie jsona
+        final JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("response");
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                            int i = jsonObject.getInt("COUNT(UserID)");
+                            if(i==0)
+                            {
+                                registerNewUser(email.getText().toString(),hashedPassword,nick.getText().toString());
+                            }
+                            else
+                            {
+                                email.setError("Email is in use");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.i("Error", e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+
+        VolleySingleton.getInstance(SignUpActivity.this).addToRequestQueue(jsonRequest);
+
+    }
 
 
     public void registerNewUser(String mail, String hashedPassword, String nick){
