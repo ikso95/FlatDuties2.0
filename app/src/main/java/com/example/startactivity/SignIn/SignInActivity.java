@@ -3,9 +3,7 @@ package com.example.startactivity.SignIn;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,23 +21,16 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.startactivity.Add_or_join_group.First_use_add_or_join_group;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Common.VolleySingleton;
-import com.example.startactivity.DBConnection.DB_Query;
 import com.example.startactivity.Main.MainActivity;
-import com.example.startactivity.Main.Settings;
 import com.example.startactivity.Models.BCrypt;
 import com.example.startactivity.Models.Email;
 import com.example.startactivity.Models.Password;
 import com.example.startactivity.Models.User;
 import com.example.startactivity.R;
-import com.example.startactivity.SignUp.SignUpActivity;
-import com.example.startactivity.Start.StartActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Random;
-import java.util.jar.Attributes;
 
 
 /*
@@ -106,7 +97,6 @@ public class SignInActivity extends AppCompatActivity {
                 }
              }});
 
-
     }
 
     private void isUserRegistered() {
@@ -154,19 +144,13 @@ public class SignInActivity extends AppCompatActivity {
 
     private void generateNewTempPassword() {
 
-        Random random = new Random();
-        String tempPassword = String.valueOf(random.nextInt(899999)+100000);
+        Password pass = new Password();
 
-        String hashedPassword;
-        //hashing users password using bcrypt, if contains "/" create new hash because this sign is not acceptable in our api path
-        do {
-            hashedPassword = BCrypt.hashpw(tempPassword, BCrypt.gensalt(10));
-        }
-        while(hashedPassword.contains("/"));
+        pass.hashPassword();
 
-        updateNewPasswordToDB(hashedPassword,tempPassword);
+        Toast.makeText(SignInActivity.this,pass.getHashedPassword(),Toast.LENGTH_LONG).show();
 
-
+        updateNewPasswordToDB(pass.getHashedPassword(),pass.getPassword());
 
     }
 
@@ -202,21 +186,16 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-
-
                     GMailSender sender = new GMailSender("lisuoskar@gmail.com",
                             "Defekacja2");
                     sender.sendMail(getBaseContext().getString(R.string.Email_title),               //title
                             getBaseContext().getString(R.string.Email_body)+tempPassword,    //body message
                             "lisuoskar@gmail.com",                                           //sender
                             email.getText().toString().trim());                                     //recipent
-
-
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }
             }
-
         }).start();
         mDialog.dismiss();
         Toast.makeText(SignInActivity.this,getBaseContext().getString(R.string.forget_password_toast)+email.getText().toString().trim(),Toast.LENGTH_LONG).show();

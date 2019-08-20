@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.startactivity.Add_or_join_group.First_use_add_or_join_group;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Main.MainActivity;
 import com.example.startactivity.Models.User;
@@ -219,9 +220,18 @@ public class StartActivity extends AppCompatActivity {
 
         if(uzytkownikID!=0) //jeżeli zostały odczytane poprawne dane, wartosc 0 jest domyślnie ustawiana, w bazie nie ma takiego rekordu
         {
-            Intent intent = new Intent(StartActivity.this, MainActivity.class);
-            startActivity(intent);
-            Toast.makeText(StartActivity.this, "Signed in", Toast.LENGTH_SHORT).show();
+            if(u.getGroupName().length()<=1)
+            {
+                Intent intent = new Intent(StartActivity.this, First_use_add_or_join_group.class);
+                startActivity(intent);
+            }
+            else
+            {
+                Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(StartActivity.this, "Welcome back "+u.getNick(), Toast.LENGTH_SHORT).show();
+            }
+
         }
 
     }

@@ -70,7 +70,6 @@ public class Create_new_group extends AppCompatActivity {
         group_password = (EditText)findViewById(R.id.new_group_password_editText_group);
         group_repeated_password = (EditText)findViewById(R.id.repeat_new_group_password_editText_group);
 
-
         create_and_join_group = (Button)findViewById(R.id.create_and_join_button_group);
 
         create_and_join_group.setOnClickListener(new View.OnClickListener() {
@@ -189,20 +188,11 @@ public class Create_new_group extends AppCompatActivity {
 
     private void hashPassword()
     {
-        String hashedPassword;
-        //hashing users password using bcrypt, if contains "/" create new hash because this sign is not acceptable in our api path
-        do {
-            hashedPassword = BCrypt.hashpw(group_password.getText().toString(), BCrypt.gensalt(10));
-        }
-        while(hashedPassword.contains("/"));
+        Password password = new Password(group_password.getText().toString());
+        password.hashPassword();
 
-
-            create_and_join_group(hashedPassword);
-
-
+        create_and_join_group(password.getHashedPassword());
     }
-
-
 
 
     private void create_and_join_group(String password) {
@@ -308,8 +298,6 @@ public class Create_new_group extends AppCompatActivity {
                 });
         RequestQueue queue =  VolleySingleton.getInstance(Create_new_group.this.getApplicationContext()).getRequestQueue();
         queue.add(jsonRequest);
-
-
     }
 
 

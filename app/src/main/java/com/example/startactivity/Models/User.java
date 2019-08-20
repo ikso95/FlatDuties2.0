@@ -8,11 +8,7 @@ public class User {
     //private Password password;
     private String nick;
     private int groupID;
-    private String groupName = "in any group";
-
-
-
-
+    private String groupName;
 
 
     public User(int uzytkownikID, String email, String nick, int groupID, String groupName) {
