@@ -145,7 +145,7 @@ public class Create_new_group extends AppCompatActivity {
     private void isGroupNameAvailable()
     {
         //ustawienie url zgodnego z api
-        String url = Common.getUrl()+"isGroupNameAvailable/"+group_name.getText().toString();
+        String url = Common.getUrl()+"isGroupNameAvailable/"+group_name.getText().toString().trim();
 
         //pobranie danych z bazy w formie jsona
         JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -207,7 +207,7 @@ public class Create_new_group extends AppCompatActivity {
 
     private void create_and_join_group(String password) {
 
-        String url = Common.getUrl()+"createNewGroup/"+group_name.getText().toString()+"/"+password;
+        String url = Common.getUrl()+"createNewGroup/"+group_name.getText().toString().trim()+"/"+password;
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
@@ -236,7 +236,7 @@ public class Create_new_group extends AppCompatActivity {
     private void join_group() {
 
         //ustawienie url zgodnego z api
-        String url = Common.getUrl()+"joinGroup/"+group_name.getText().toString();
+        String url = Common.getUrl()+"joinGroup/"+group_name.getText().toString().trim();
 
         //pobranie danych z bazy w formie jsona
         JsonObjectRequest jsonRequest = new JsonObjectRequest

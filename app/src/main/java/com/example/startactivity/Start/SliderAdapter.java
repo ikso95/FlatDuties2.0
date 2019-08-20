@@ -17,8 +17,8 @@ import org.w3c.dom.Text;
 
 public class SliderAdapter extends PagerAdapter {
 
-    Context context;
-    LayoutInflater layoutInflater;
+    private Context context;
+    private LayoutInflater layoutInflater;
 
     public SliderAdapter(Context ctx){
         this.context = ctx;
@@ -31,25 +31,13 @@ public class SliderAdapter extends PagerAdapter {
             R.drawable.cart
     };
 
-    public String[] slide_heading={
-            "Welcome!",
-            "Join group",
-            "Share duties",
-            "Make shopping lists"
-    };
 
-    public String[] slide_descs={
-            "We are happy that you have downloaded our app. You are only a few steps away from using it!",
-            "Create a group and invite your roommates to join",
-            "The application allows you to manage your household duties.",
-            "Create and share shopping lists with your flat mates."
-    };
 
 
 
     @Override
     public int getCount() {
-        return slide_heading.length;
+        return slide_images.length;
     }
 
     @Override
@@ -61,6 +49,21 @@ public class SliderAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
+
+        String[] slide_heading={
+                context.getString(R.string.slide_heading_1),
+                context.getString(R.string.slide_heading_2),
+                context.getString(R.string.slide_heading_3),
+                context.getString(R.string.slide_heading_4)
+        };
+
+        String[] slide_descs={
+                context.getString(R.string.slide_description_1),
+                context.getString(R.string.slide_description_2),
+                context.getString(R.string.slide_description_3),
+                context.getString(R.string.slide_description_4)
+        };
+
         layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.slide_layout,container,false);
 

@@ -45,4 +45,15 @@
     <string name="Description_first_group">Join an existing group or create one for your apartment.</string>
     <string name="Join_group_more_info">If you don\'t remember group name, you can search it using following data (only if you provided this data then creating group)</string>
     <string name="Join_group_with_group_name">If you remember group name, and password you can easly join group only with these data</string>
+    <string name="Email_title">Flat Duties: Password reset</string>
+    <string name="Email_body">Hello, Because you have forgotten the password to our application, we have generated a new temporary password for your account. \nDon\'t forget to change it immediately after you log in successfully. \nYour temporary password is:    </string>
+    <string name="slide_heading_1">Welcome!</string>
+    <string name="slide_heading_2">Join group</string>
+    <string name="slide_heading_3">Share duties</string>
+    <string name="slide_heading_4">Make shopping lists</string>
+    <string name="slide_description_1">We are happy that you have downloaded our app. You are only a few steps away from using it!</string>
+    <string name="slide_description_2">Create a group and invite your roommates to join</string>
+    <string name="slide_description_3">The application allows you to manage your household duties.</string>
+    <string name="slide_description_4">Create and share shopping lists with your flat mates.</string>
+    <string name="forget_password_toast">New password has been sent to:</string>
 </resources>

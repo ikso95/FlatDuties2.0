@@ -1,7 +1,9 @@
 package com.example.startactivity.SignIn;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
@@ -14,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -22,17 +25,20 @@ import com.example.startactivity.Common.Common;
 import com.example.startactivity.Common.VolleySingleton;
 import com.example.startactivity.DBConnection.DB_Query;
 import com.example.startactivity.Main.MainActivity;
+import com.example.startactivity.Main.Settings;
 import com.example.startactivity.Models.BCrypt;
 import com.example.startactivity.Models.Email;
 import com.example.startactivity.Models.Password;
 import com.example.startactivity.Models.User;
 import com.example.startactivity.R;
 import com.example.startactivity.SignUp.SignUpActivity;
+import com.example.startactivity.Start.StartActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
 import java.util.jar.Attributes;
 
 
@@ -52,6 +58,8 @@ public class SignInActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private SharedPreferences.Editor mEditor;
 
+    public ProgressDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +75,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                //pobranie hashPassword konta o podanym mailu
-                getUserHashPassword(email.getText().toString());
+                getUserHashPassword(email.getText().toString().trim());
 
             }
         });
@@ -85,11 +93,133 @@ public class SignInActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    //wysłać maila z możliwośćią resetu hasła
+                    mDialog = new ProgressDialog(SignInActivity.this);
+                    mDialog.setMessage("Please wait...");
+                    mDialog.show();
+
+                    //czy istenieje taki adres email w bazie
+                    isUserRegistered();
+                    //generowanie nowego hasla
+                    //przypisanie do maila nowego hasla
+                    //wyslanie maila z nowym haslem
+
+                }
+             }});
+
+
+    }
+
+    private void isUserRegistered() {
+
+        //ustawienie url zgodnego z api
+        String url = Common.getUrl()+"isUserRegistered2/"+email.getText().toString().trim();
+
+        //pobranie danych z bazy w formie jsona
+        final JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("response");
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                            int i = jsonObject.getInt("COUNT(UserID)");
+                            if(i==0)
+                            {
+                                email.setError("No account with this email");
+                            }
+                            else
+                            {
+                                generateNewTempPassword();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.i("Error", e.getMessage());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+
+        VolleySingleton.getInstance(SignInActivity.this).addToRequestQueue(jsonRequest);
+
+    }
+
+    private void generateNewTempPassword() {
+
+        Random random = new Random();
+        String tempPassword = String.valueOf(random.nextInt(899999)+100000);
+
+        String hashedPassword;
+        //hashing users password using bcrypt, if contains "/" create new hash because this sign is not acceptable in our api path
+        do {
+            hashedPassword = BCrypt.hashpw(tempPassword, BCrypt.gensalt(10));
+        }
+        while(hashedPassword.contains("/"));
+
+        updateNewPasswordToDB(hashedPassword,tempPassword);
+
+
+
+    }
+
+    private void updateNewPasswordToDB(final String hashedPassword, final String tempPassword) {
+        String url = Common.getUrl()+"changePassword2/"+email.getText().toString().trim()+"/"+hashedPassword;
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        sendEmail(tempPassword);
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        error.printStackTrace();
+                        Log.d("ConnectionError", "Error: " + error.getMessage());
+                    }
+
+                });
+        RequestQueue queue =  VolleySingleton.getInstance(SignInActivity.this.getApplicationContext()).getRequestQueue();
+        queue.add(jsonRequest);
+    }
+
+    private void sendEmail(final String tempPassword) {
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+
+
+                    GMailSender sender = new GMailSender("lisuoskar@gmail.com",
+                            "Defekacja2");
+                    sender.sendMail(getBaseContext().getString(R.string.Email_title),               //title
+                            getBaseContext().getString(R.string.Email_body)+tempPassword,    //body message
+                            "lisuoskar@gmail.com",                                           //sender
+                            email.getText().toString().trim());                                     //recipent
+
+
+                } catch (Exception e) {
+                    Log.e("SendMail", e.getMessage(), e);
                 }
             }
-        });
 
+        }).start();
+        mDialog.dismiss();
+        Toast.makeText(SignInActivity.this,getBaseContext().getString(R.string.forget_password_toast)+email.getText().toString().trim(),Toast.LENGTH_LONG).show();
     }
 
 
@@ -145,7 +275,7 @@ public class SignInActivity extends AppCompatActivity {
     private void signIn() {
 
         //ustawienie url zgodnego z api
-        String url = Common.getUrl()+"signIn/"+email.getText().toString();
+        String url = Common.getUrl()+"signIn/"+email.getText().toString().trim();
 
         //pobranie danych z bazy w formie jsona
         JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -208,3 +338,5 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 }
+
+

@@ -73,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 Password pass = new Password(password.getText().toString());
                 Password rpass = new Password(repeat_password.getText().toString());
-                final Email mail = new Email(email.getText().toString());
+                final Email mail = new Email(email.getText().toString().trim());
 
                 if(mail.isEmailCorrect() && pass.isPasswordCorrect() && rpass.isPasswordCorrect()
                         && nick.getText()!=null && password.getText().toString().equals(repeat_password.getText().toString()))
@@ -117,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void isUserRegistered(final String hashedPassword) {
 
         //ustawienie url zgodnego z api
-        String url = Common.getUrl()+"isUserRegistered2/"+email.getText().toString();
+        String url = Common.getUrl()+"isUserRegistered2/"+email.getText().toString().trim();
 
         //pobranie danych z bazy w formie jsona
         final JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -132,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
                             int i = jsonObject.getInt("COUNT(UserID)");
                             if(i==0)
                             {
-                                registerNewUser(email.getText().toString(),hashedPassword,nick.getText().toString());
+                                registerNewUser(email.getText().toString().trim(),hashedPassword,nick.getText().toString().trim());
                             }
                             else
                             {
