@@ -41,18 +41,25 @@ public class NewCyclicalDuty extends AppCompatActivity {
 
     private TextView monday;
     private CheckBox monday_checkbox;
+    private int mondayInt;
     private TextView tuesday;
     private CheckBox tuesday_checkbox;
+    private int tuesdayInt;
     private TextView wednesday;
     private CheckBox wednesday_checkbox;
+    private int wednesdayInt;
     private TextView thursday;
     private CheckBox thursday_checkbox;
+    private int thursdayInt;
     private TextView friday;
     private CheckBox friday_checkbox;
+    private int fridayInt;
     private TextView saturday;
     private CheckBox saturday_checkbox;
+    private int saturdayInt;
     private TextView sunday;
     private CheckBox sunday_checkbox;
+    private int sundayInt;
 
     private FloatingActionButton add_duty;
     private FloatingActionButton cancel;
@@ -63,8 +70,6 @@ public class NewCyclicalDuty extends AppCompatActivity {
     public List<User> userList = new ArrayList<>();
 
     private String zadDlaID = "";
-    private String dayString = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,11 +218,12 @@ public class NewCyclicalDuty extends AppCompatActivity {
         mDialog.show();
 
         String url = Common.getUrl()+"addNewCyclicalDutyWithoutDesc/"+duty_name.getText().toString().trim()+"/"+
-               dayString+"/"+String.valueOf(Common.currentUser.getGroupID())+"/"
-                +String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID;
+                String.valueOf(Common.currentUser.getGroupID())+"/"+
+                String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID+"/"+mondayInt+"/"+
+                tuesdayInt+"/"+wednesdayInt+"/"+thursdayInt+"/"+fridayInt+"/"+saturdayInt+"/"+sundayInt;
 
         zadDlaID="";
-        dayString="";
+
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
@@ -264,11 +270,11 @@ public class NewCyclicalDuty extends AppCompatActivity {
         mDialog.show();
 
         String url = Common.getUrl()+"addNewCyclicalDuty/"+duty_name.getText().toString().trim()+"/"+
-                duty_description.getText().toString()+"/"+dayString+"/"+String.valueOf(Common.currentUser.getGroupID())+"/"
-                +String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID;
+                duty_description.getText().toString()+"/"+String.valueOf(Common.currentUser.getGroupID())+"/"+
+                String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID+"/"+ mondayInt+"/"+
+                tuesdayInt+"/"+wednesdayInt+"/"+thursdayInt+"/"+fridayInt+"/"+saturdayInt+"/"+sundayInt;
 
         zadDlaID="";
-        dayString="";
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
@@ -317,47 +323,49 @@ public class NewCyclicalDuty extends AppCompatActivity {
         }
 
         int checked_days=0;
+
         if(monday_checkbox.isChecked()==true)
         {
+            mondayInt=1;
             checked_days++;
-            dayString=dayString+"monday ";
         }
 
         if(tuesday_checkbox.isChecked()==true)
         {
+            tuesdayInt=1;
             checked_days++;
-            dayString=dayString+"tuesday ";
         }
 
         if(wednesday_checkbox.isChecked()==true)
         {
+            wednesdayInt=1;
             checked_days++;
-            dayString=dayString+"wednesday ";
         }
 
         if(thursday_checkbox.isChecked()==true)
         {
+            thursdayInt=1;
             checked_days++;
-            dayString=dayString+"thursday ";
         }
 
         if(friday_checkbox.isChecked()==true)
         {
+            fridayInt=1;
             checked_days++;
-            dayString=dayString+"friday ";
         }
 
         if(saturday_checkbox.isChecked()==true)
         {
+            saturdayInt=1;
             checked_days++;
-            dayString=dayString+"sturday ";
         }
 
         if(sunday_checkbox.isChecked()==true)
         {
+            sundayInt=1;
             checked_days++;
-            dayString=dayString+"sunday ";
         }
+
 
 
 
