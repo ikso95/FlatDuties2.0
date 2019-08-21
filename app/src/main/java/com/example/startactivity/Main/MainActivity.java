@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.startactivity.Activities.Activity_fragment;
+import com.example.startactivity.Activities.NewCyclicalDuty;
 import com.example.startactivity.Add_or_join_group.Create_new_group;
 import com.example.startactivity.Add_or_join_group.Join_group;
 import com.example.startactivity.Common.Common;
@@ -99,7 +100,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.join_group_drawer) {
+        if (id == R.id.new_duty_drawer) {
+            Intent intent = new Intent(MainActivity.this, NewCyclicalDuty.class);
+            startActivity(intent);
+        } else if (id == R.id.menage_duties_drawer) {
+            //Intent intent = new Intent(MainActivity.this, MenageDuties.class);
+            //startActivity(intent);
+        } else if (id == R.id.join_group_drawer) {
             Intent intent = new Intent(MainActivity.this, Join_group.class);
             startActivity(intent);
         } else if (id == R.id.create_new_group_drawer) {
@@ -110,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_logout_drawer2) {
+        } else if (id == R.id.nav_logout_drawer) {
             logout();
         }
 

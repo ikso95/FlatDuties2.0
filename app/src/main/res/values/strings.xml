@@ -56,4 +56,11 @@
     <string name="slide_description_3">The application allows you to manage your household duties.</string>
     <string name="slide_description_4">Create and share shopping lists with your flat mates.</string>
     <string name="forget_password_toast">New password has been sent to:</string>
+    <string name="cyclical_duties">Cyclical duties</string>
+    <string name="New_duty">New duty</string>
+    <string name="Name">Name</string>
+    <string name="Description">Description</string>
+    <string name="To_do_for">To do for:</string>
+    <string name="Do_every">Do every:</string>
+    <string name="manage_duties">Menage duties</string>
 </resources>

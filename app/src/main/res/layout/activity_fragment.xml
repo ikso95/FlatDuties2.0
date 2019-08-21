@@ -1,24 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    >
 
-    <TextView
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Activity fragment"
+                android:textSize="30sp"/>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+    <EditText
+        android:id="@+id/duty_input_editText_duty_fragment"
+        android:padding="10dp"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="textCapSentences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Activity fragment"
-        android:textSize="30sp"/>
+        android:layout_alignParentBottom="true"
+        android:maxLines="1"
+        />
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_duty_floatingButton_activity_fragment"
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#4CAF50"
-        />
+        android:layout_alignTop="@+id/duty_input_editText_duty_fragment"
+        android:layout_alignBottom="@+id/duty_input_editText_duty_fragment"
+        android:layout_alignRight="@+id/duty_input_editText_duty_fragment"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/ic_action_send"/>
+
+
+
 </RelativeLayout>
