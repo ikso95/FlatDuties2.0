@@ -293,11 +293,13 @@ public class SignInActivity extends AppCompatActivity {
                             {
                                 Intent intent = new Intent(SignInActivity.this, First_use_add_or_join_group.class);
                                 startActivity(intent);
+                                finish();
                             }
                             else    //jezeli juz ma przypisana grupe kontynuuj normalnie
                             {
                                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
 
                         } catch (JSONException e) {

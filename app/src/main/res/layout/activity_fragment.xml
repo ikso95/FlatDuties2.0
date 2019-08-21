@@ -5,33 +5,27 @@
     android:layout_height="match_parent"
     >
 
-
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_duty_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/duties_recyclerView_duty_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Activity fragment"
-                android:textSize="30sp"/>
+            android:layout_height="match_parent">
 
 
-        </LinearLayout>
+        </android.support.v7.widget.RecyclerView>
 
-
-    </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 
 
     <EditText
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/duty_input_editText_duty_fragment"
         android:padding="10dp"
         android:background="@drawable/rounded_edittext"
@@ -40,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:maxLines="1"
+        android:hint="@string/New_duty"
         />
 
     <ImageButton

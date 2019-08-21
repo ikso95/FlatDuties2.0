@@ -80,4 +80,32 @@ public class User {
         this.groupName = groupName;
     }
 
+
+    //uzywane w liscie osob przypisywanych do nowego activity
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    private boolean isChecked;
+
+    public boolean getChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public User(int uzytkownikID, String nick, int position) {
+        this.uzytkownikID = uzytkownikID;
+        this.nick = nick;
+        this.position = position;
+    }
+
 }

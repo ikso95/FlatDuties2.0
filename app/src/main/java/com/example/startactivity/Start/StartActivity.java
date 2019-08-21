@@ -224,11 +224,13 @@ public class StartActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(StartActivity.this, First_use_add_or_join_group.class);
                 startActivity(intent);
+                finish();
             }
             else
             {
                 Intent intent = new Intent(StartActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 Toast.makeText(StartActivity.this, "Welcome back "+u.getNick(), Toast.LENGTH_SHORT).show();
             }
 
