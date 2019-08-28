@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -71,6 +73,20 @@ public class Activity_fragment extends Fragment {
 
         getDutiesData();
 
+        //hide fab when scrolling down
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(dy > 5){
+                    floatingActionButton.hide();
+                } else if(dy<-5){
+                    floatingActionButton.show();
+                }
+
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
 
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_duty_fragment);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -90,7 +106,6 @@ public class Activity_fragment extends Fragment {
         });
 
         duty_name = (EditText)view.findViewById(R.id.duty_input_editText_duty_fragment);
-        //add_duty = (ImageButton)view.findViewById(R.id.send_new_duty_button_activity_fragment);
         add_duty = (FloatingActionButton) view.findViewById(R.id.send_new_duty_button_activity_fragment);
 
         add_duty.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +119,7 @@ public class Activity_fragment extends Fragment {
                     duty_name.setText("");
 
                     duty_name.setVisibility(View.INVISIBLE);
-                    add_duty.setVisibility(View.INVISIBLE);
+                    add_duty.hide();
 
 
                     floatingActionButton.animate().rotationBy(135.0f).setDuration(500);
@@ -123,7 +138,7 @@ public class Activity_fragment extends Fragment {
                 if(duty_name.isShown()==false)
                 {
                     duty_name.setVisibility(View.VISIBLE);
-                    add_duty.setVisibility(View.VISIBLE);
+                    add_duty.show();
                     floatingActionButton.animate().rotationBy(-135.0f).setDuration(500);
                     floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent,null)));
                     floatingActionButton.animate().translationX(-170);
@@ -131,7 +146,7 @@ public class Activity_fragment extends Fragment {
                 }
                 else {
                     duty_name.setVisibility(View.INVISIBLE);
-                    add_duty.setVisibility(View.INVISIBLE);
+                    add_duty.hide();
                     duty_name.setText("");
                     duty_name.setError(null);
 
@@ -143,6 +158,12 @@ public class Activity_fragment extends Fragment {
                 }
             }
         });
+
+
+
+
+
+
 
 
         return view;

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
 
 
-        View  v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.duty_item2,viewGroup,false);
+        View  v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.duty_item,viewGroup,false);
         return  new ViewHolder(v);
 
     }
@@ -91,7 +92,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
         public TextView textViewDescription;
 
 
-        public Button button;
+        public ImageButton button;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,7 +102,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
 
             //textViewDate = (TextView)itemView.findViewById(R.id.day_textView_duty_item);
 
-            button = (Button)itemView.findViewById(R.id.ok_button_duty_item);
+            button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item);
         }
     }
 
