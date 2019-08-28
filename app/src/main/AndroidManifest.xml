@@ -17,24 +17,41 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.NewCyclicalDuty"></activity>
+        <activity android:name=".Activities.NewCyclicalDuty"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Add_or_join_group.First_use_add_or_join_group"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Add_or_join_group.Create_new_group" />
-        <activity android:name=".Add_or_join_group.Join_group" />
-        <activity android:name=".Main.Settings" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Add_or_join_group.Create_new_group"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Add_or_join_group.Join_group"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Main.Settings"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SignUp.SignUpActivity" />
-        <activity android:name=".SignIn.SignInActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SignUp.SignUpActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SignIn.SignInActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Start.StartActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

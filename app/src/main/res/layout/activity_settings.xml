@@ -97,7 +97,7 @@
                 android:id="@+id/newNick_editText_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|textCapWords"
                 android:hint="@string/New_Nick"
                 android:textSize="20sp"
                 android:autofillHints="@string/New_Email"/>

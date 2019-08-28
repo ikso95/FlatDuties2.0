@@ -2,11 +2,17 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle"
     >
-    <solid android:color="@color/colorPrimary"/>
-    <corners
-        android:bottomRightRadius="20dp"
-        android:bottomLeftRadius="20dp"
-        android:topLeftRadius="20dp"
-        android:topRightRadius="20dp"/>
-    <stroke android:width="1dip" android:color="@color/colorWhite" />
+
+    <!-- color  -->
+    <solid android:color="@color/colorWhite"/>
+
+    <!-- corners  -->
+    <corners android:radius="20dp" />
+
+    <!-- outline of the shape  -->
+    <stroke android:width="3dip" android:color="@color/colorPrimary" />
+
+
+
+
 </shape>

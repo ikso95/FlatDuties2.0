@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:animateLayoutChanges="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_duty_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/duties_recyclerView_duty_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+
+            >
 
 
         </android.support.v7.widget.RecyclerView>
@@ -23,28 +27,67 @@
 
 
 
+
+
     <EditText
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="15dp"
         android:id="@+id/duty_input_editText_duty_fragment"
-        android:padding="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:background="@drawable/rounded_edittext"
         android:inputType="textCapSentences"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
         android:maxLines="1"
         android:hint="@string/New_duty"
+        android:visibility="invisible"
+
         />
 
-    <ImageButton
+    <!--<ImageButton
+        android:id="@+id/send_new_duty_button_activity_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/duty_input_editText_duty_fragment"
         android:layout_alignBottom="@+id/duty_input_editText_duty_fragment"
-        android:layout_alignRight="@+id/duty_input_editText_duty_fragment"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/ic_action_send"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/ic_action_send"
+        android:visibility="invisible"/>    -->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="auto"
+
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/send_new_duty_button_activity_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_action_send"
+        app:backgroundTint="@color/colorPrimary"
+        android:visibility="invisible"
+        app:fabSize="auto"
+        app:maxImageSize="30dp"/>
+
 
 
 
