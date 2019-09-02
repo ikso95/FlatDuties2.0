@@ -17,7 +17,7 @@
             >
 
             <TextView
-                android:id="@+id/duty_name_textView_duty_item"
+                android:id="@+id/duty_name_textView_duty_item2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -27,10 +27,10 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/day_textView_duty_item"
+                android:id="@+id/day_textView_duty_item2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/duty_name_textView_duty_item"
+                android:layout_below="@+id/duty_name_textView_duty_item2"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="15dp"
                 android:background="@android:color/transparent"
@@ -41,7 +41,7 @@
 
 
             <ImageButton
-                android:id="@+id/ok_button_duty_item"
+                android:id="@+id/ok_button_duty_item2"
                 android:layout_width="50dp"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"

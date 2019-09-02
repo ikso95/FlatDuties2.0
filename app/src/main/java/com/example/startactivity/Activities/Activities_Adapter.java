@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.ViewHolder> {
+public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private List<ListItem> listItems ;
@@ -45,38 +45,172 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
     }
 
 
-    //called when viewHolder is created
-    @NonNull
+
+    //w zaleznosci od danych zwraca liczbe odpowiednia dla kazdego layoutu
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
+    public int getItemViewType(int position) {
 
-            View  v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.duty_item,viewGroup,false);
-            return  new ViewHolder(v);
-
+        if(listItems.get(position).getDuty_description()!=null)
+        {
+            return 1;
+        }
+        else if(listItems.get(position).getMonday()==0 && listItems.get(position).getTuesday()==0 &&
+                listItems.get(position).getWednesday()==0 && listItems.get(position).getThursday()==0 &&
+                listItems.get(position).getFriday()==0 && listItems.get(position).getSaturday()==0 &&
+                listItems.get(position).getSunday()==0 )
+        {
+            return 3;
+        }
+        else
+        {
+            return 2;
+        }
     }
 
-    //called after onCreateViewHolder, bind data to viewHolder
+    //w zaleznosci jaki layout powinien byc taki wlasnie tworzymy
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        final ListItem listItem = listItems.get(i);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        viewHolder.textViewNazwa.setText(listItem.getDuty_name());
-        viewHolder.textViewDescription.setText(listItem.getDuty_description());
+        View view =null;
+        RecyclerView.ViewHolder viewHolder = null;
+
+        if(viewType==1)
+        {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.duty_item,parent,false);
+            viewHolder = new ViewHolder1(view);
+        }
+        else if (viewType==2)
+        {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.duty_item2,parent,false);
+            viewHolder= new ViewHolder2(view);
+        }
+        else
+        {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.duty_item3,parent,false);
+            viewHolder= new ViewHolder3(view);
+        }
+
+        return viewHolder;
+    }
 
 
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DeleteDuty().doInBackground(listItem.getDutyId());
-                //postActivityDone(listItem.getDutyId());
-                listItems.remove(i);
-                notifyItemRemoved(i);           //informuje o usunietym elemencie
-                notifyItemRangeChanged(i, listItems.size());
 
+    //wypelniamy wszystkie dane
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+        if(holder.getItemViewType()==1)
+        {
+            ViewHolder1 vaultItemHolder = (ViewHolder1) holder;
+            ((ViewHolder1) holder).textViewNazwa.setText(listItems.get(position).getDuty_name());
+            ((ViewHolder1) holder).textViewDescription.setText(listItems.get(position).getDuty_description());
+
+            String day = "";
+            if(listItems.get(position).getMonday()==1)
+            {
+                day=day+"Mon ";
             }
-        });
+            if(listItems.get(position).getTuesday()==1)
+            {
+                day=day+"Tu ";
+            }
+            if(listItems.get(position).getWednesday()==1)
+            {
+                day=day+"Wen ";
+            }
+            if(listItems.get(position).getThursday()==1)
+            {
+                day=day+"Thu ";
+            }
+            if(listItems.get(position).getFriday()==1)
+            {
+                day=day+"Fri ";
+            }
+            if(listItems.get(position).getSaturday()==1)
+            {
+                day=day+"Sat ";
+            }
+            if(listItems.get(position).getSunday()==1)
+            {
+                day=day+"Su ";
+            }
+            ((ViewHolder1) holder).textViewDay.setText(day);
+
+            ((ViewHolder1) holder).button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new DeleteDuty().doInBackground(listItems.get(position).getDutyId());
+                    listItems.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,listItems.size());
+                }
+            });
+
+
+        }
+        else if (holder.getItemViewType() == 2){
+
+            ViewHolder2 vaultItemHolder = (ViewHolder2) holder;
+            ((ViewHolder2) holder).textViewNazwa.setText(listItems.get(position).getDuty_name());
+
+            String day = "";
+            if(listItems.get(position).getMonday()==1)
+            {
+                day=day+"Mon ";
+            }
+            if(listItems.get(position).getTuesday()==1)
+            {
+                day=day+"Tu ";
+            }
+            if(listItems.get(position).getWednesday()==1)
+            {
+                day=day+"Wen ";
+            }
+            if(listItems.get(position).getThursday()==1)
+            {
+                day=day+"Thu ";
+            }
+            if(listItems.get(position).getFriday()==1)
+            {
+                day=day+"Fri ";
+            }
+            if(listItems.get(position).getSaturday()==1)
+            {
+                day=day+"Sat ";
+            }
+            if(listItems.get(position).getSunday()==1)
+            {
+                day=day+"Su ";
+            }
+            ((ViewHolder2) holder).textViewDay.setText(day);
+            ((ViewHolder2) holder).button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new DeleteDuty().doInBackground(listItems.get(position).getDutyId());
+                    listItems.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,listItems.size());
+                }
+            });
+
+        }
+        else if (holder.getItemViewType() == 3)
+        {
+            ViewHolder3 vaultItemHolder = (ViewHolder3) holder;
+            ((ViewHolder3) holder).textViewNazwa.setText(listItems.get(position).getDuty_name());
+            ((ViewHolder3) holder).button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new DeleteDuty().doInBackground(listItems.get(position).getDutyId());
+                    listItems.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,listItems.size());
+                }
+            });
+        }
 
     }
+
 
 
 
@@ -85,21 +219,48 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
         return listItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder1 extends RecyclerView.ViewHolder{
 
         public TextView textViewNazwa;
         public TextView textViewDescription;
+        public TextView textViewDay;
         public ImageButton button;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder1(@NonNull View itemView) {
             super(itemView);
 
             textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item);
             textViewDescription = (TextView)itemView.findViewById(R.id.duty_desc_textView_duty_item);
-
-            //textViewDate = (TextView)itemView.findViewById(R.id.day_textView_duty_item);
-
+            textViewDay = (TextView)itemView.findViewById(R.id.day_textView_duty_item);
             button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item);
+        }
+    }
+
+    public class ViewHolder2 extends RecyclerView.ViewHolder{
+
+        public TextView textViewNazwa;
+        public TextView textViewDay;
+        public ImageButton button;
+
+        public ViewHolder2(@NonNull View itemView) {
+            super(itemView);
+
+            textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item2);
+            textViewDay = (TextView)itemView.findViewById(R.id.day_textView_duty_item2);
+            button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item2);
+        }
+    }
+
+    public class ViewHolder3 extends RecyclerView.ViewHolder{
+
+        public TextView textViewNazwa;
+        public ImageButton button;
+
+        public ViewHolder3(@NonNull View itemView) {
+            super(itemView);
+
+            textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item3);
+            button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item3);
         }
     }
 
