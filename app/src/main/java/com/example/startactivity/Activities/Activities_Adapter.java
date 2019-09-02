@@ -108,32 +108,23 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
 
 
 
-
     private void postActivityDone(final int id, final View v)
     {
-        final ProgressDialog mDialog = new ProgressDialog(v.getContext());
-        mDialog.setMessage("Please wait...");
-        mDialog.show();
-
-        String url = Common.getUrl()+"postActivityDone/"+id;
+        String url = Common.getUrl()+"deleteDuty/"+id;
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+                (Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        mDialog.dismiss();
-                        //Toast.makeText(Add_activity.this, "Zadanie dodane", Toast.LENGTH_SHORT).show();
 
-                        //odswiezanie listy zrobione w klasie activities_tab, ta metoda jest bledna ale zostawie
-                        //Intent intent = new Intent(v.getContext(), MainActivity.class);
-                        //context.startActivity(intent);
+
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
+
                         error.printStackTrace();
                         //Toast.makeText(Add_activity.this, "Connection error", Toast.LENGTH_SHORT ).show();
                         Log.d("Error", error.toString());

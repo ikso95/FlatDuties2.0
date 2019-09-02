@@ -53,7 +53,6 @@ public class ListItem {
 
 
 
-
     public int getDutyId() {
         return dutyId;
     }

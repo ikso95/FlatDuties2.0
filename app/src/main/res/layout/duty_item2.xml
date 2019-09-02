@@ -27,29 +27,17 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/duty_desc_textView_duty_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/duty_name_textView_duty_item"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
-                android:background="@android:color/transparent"
-                android:maxEms="10"
-                android:text="Description"
-                android:textSize="17sp" />
-
-            <TextView
                 android:id="@+id/day_textView_duty_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/duty_desc_textView_duty_item"
+                android:layout_below="@+id/duty_name_textView_duty_item"
                 android:layout_marginLeft="15dp"
                 android:layout_marginBottom="15dp"
                 android:background="@android:color/transparent"
                 android:maxEms="10"
                 android:text="Day"
-                android:textSize="17sp" />
+                android:textSize="17sp"
+                android:layout_marginTop="5dp"/>
 
 
             <ImageButton
