@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -166,7 +167,9 @@ public class Activity_fragment extends Fragment {
                 if(duty_name.isShown()==false)
                 {
                     duty_name.setVisibility(View.VISIBLE);
-                    duty_name.setFocusable(true);
+                    duty_name.requestFocus();
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
                     add_duty.show();
 
@@ -179,6 +182,8 @@ public class Activity_fragment extends Fragment {
                     duty_name.setVisibility(View.INVISIBLE);
                     duty_name.setText("");
                     duty_name.setError(null);
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
                     add_duty.hide();
 
@@ -249,8 +254,8 @@ public class Activity_fragment extends Fragment {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.broom)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!")
+                .setContentTitle("New duty added")
+                .setContentText("Click here to show duty")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
@@ -280,8 +285,10 @@ public class Activity_fragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         listItems.add(new ListItem());  //dodanie nowego obiektu żeby liczba się zgadzała, i nie było notofication rzy dodawaniu własnego duty
+                        liczba=listItems.size();
                         mDialog.dismiss();
-                        refresh();
+                        listItems.clear();
+                        new listUpdate().execute();
 
                     }
                 }, new Response.ErrorListener() {
@@ -344,7 +351,7 @@ public class Activity_fragment extends Fragment {
 
                             }
 
-                            Toast.makeText(getContext(),String.valueOf(liczba),Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(),String.valueOf(liczba),Toast.LENGTH_SHORT).show();
                             if(listItems.size()>liczba && first_run==false)
                             {
                                 showNotification();
