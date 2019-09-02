@@ -2,6 +2,7 @@ package com.example.startactivity.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
@@ -49,9 +50,8 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup viewGroup, final int i) {
 
-
-        View  v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.duty_item,viewGroup,false);
-        return  new ViewHolder(v);
+            View  v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.duty_item,viewGroup,false);
+            return  new ViewHolder(v);
 
     }
 
@@ -67,10 +67,11 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                postActivityDone(listItem.getDutyId(),v);
+                new DeleteDuty().doInBackground(listItem.getDutyId());
+                //postActivityDone(listItem.getDutyId());
                 listItems.remove(i);
                 notifyItemRemoved(i);           //informuje o usunietym elemencie
+                notifyItemRangeChanged(i, listItems.size());
 
             }
         });
@@ -104,7 +105,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
 
 
 
-    private void postActivityDone(final int id, final View v)
+    private void postActivityDone(final int id)
     {
         final ProgressDialog mDialog = new ProgressDialog(context);
         mDialog.setMessage("Please wait...");
@@ -134,6 +135,14 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
     }
 
 
+    public class DeleteDuty extends AsyncTask<Integer,Void,Void>
+    {
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            postActivityDone(integers[0]);
+            return null;
+        }
+    }
 
 
 

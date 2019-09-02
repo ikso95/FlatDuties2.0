@@ -65,11 +65,9 @@ public class Activity_fragment extends Fragment {
     private Activities_Adapter adapter;
 
     private EditText duty_name;
-    //private ImageButton add_duty;
     private FloatingActionButton add_duty;
 
     public List<ListItem> listItems;
-    public List<ListItem> newlistItems; //
     public ListItem listItem;
 
     private FloatingActionButton floatingActionButton;
@@ -90,7 +88,7 @@ public class Activity_fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
 
         listItems = new ArrayList<>();
-        newlistItems = new ArrayList<>();   //
+
 
         refresh();
 
@@ -157,9 +155,10 @@ public class Activity_fragment extends Fragment {
                     duty_name.setError("This field cannot be empty");
                 else
                 {
-                    addNewDutyToDB();
-                    duty_name.setText("");
+                    new AddDuty().doInBackground();
+                    //addNewDutyToDB();
 
+                    duty_name.setText("");
                     duty_name.setVisibility(View.INVISIBLE);
                     add_duty.hide();
 
@@ -219,8 +218,6 @@ public class Activity_fragment extends Fragment {
                     liczba=listItems.size();
                 }
 
-                    //showNotification();
-
                 listItems.clear();
                 new listUpdate().execute();
 
@@ -230,7 +227,7 @@ public class Activity_fragment extends Fragment {
             }
         };
         //czas pierwszego wykonania funkcji run()
-        refreshHandler.postDelayed(runnable, 100);
+        refreshHandler.postDelayed(runnable, 0);
     }
 
 
@@ -276,43 +273,16 @@ public class Activity_fragment extends Fragment {
     }
 
 
-    private void addNewDutyToDB() {
-        final ProgressDialog mDialog = new ProgressDialog(getContext());
-        mDialog.setMessage("Please wait...");
-        mDialog.show();
 
-        String url = Common.getUrl()+"addNewDuty/"+duty_name.getText().toString().trim()+"/"+
-                String.valueOf(Common.currentUser.getGroupID())+"/"+String.valueOf(Common.currentUser.getUzytkownikID());
+    //async task for updating  duties list
+    public class listUpdate extends AsyncTask<Void,Void,Void>
+    {
+        @Override
+        protected Void doInBackground(Void... voids) {
 
-
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        listItems.add(new ListItem());  //dodanie nowego obiektu żeby liczba się zgadzała, i nie było notofication rzy dodawaniu własnego duty
-                        liczba=listItems.size();
-                        mDialog.dismiss();
-                        listItems.clear();
-                        new listUpdate().execute();
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(getContext(), "Connection error", Toast.LENGTH_SHORT ).show();
-                        Log.d("Error", error.toString());
-                    }
-
-                });
-        RequestQueue queue =  VolleySingleton.getInstance(getContext()).getRequestQueue();
-        queue.add(jsonRequest);
-
-
+            getDutiesData();
+            return null;
+        }
     }
 
     public void getDutiesData()
@@ -388,17 +358,53 @@ public class Activity_fragment extends Fragment {
 
 
 
-
-
-    //async task for updating  duties list
-    public class listUpdate extends AsyncTask<Void,Void,Void>
+    public class AddDuty extends AsyncTask<Void,Void,Void>
     {
         @Override
         protected Void doInBackground(Void... voids) {
-
-            getDutiesData();
+            addNewDutyToDB();
             return null;
         }
     }
+
+    private void addNewDutyToDB() {
+        final ProgressDialog mDialog = new ProgressDialog(getContext());
+        mDialog.setMessage("Please wait...");
+        mDialog.show();
+
+        String url = Common.getUrl()+"addNewDuty/"+duty_name.getText().toString().trim()+"/"+
+                String.valueOf(Common.currentUser.getGroupID())+"/"+String.valueOf(Common.currentUser.getUzytkownikID());
+
+
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        listItems.add(new ListItem());  //dodanie nowego obiektu żeby liczba się zgadzała, i nie było notofication rzy dodawaniu własnego duty
+                        liczba=listItems.size();
+                        mDialog.dismiss();
+                        listItems.clear();
+                        new listUpdate().execute();
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        mDialog.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(getContext(), "Connection error", Toast.LENGTH_SHORT ).show();
+                        Log.d("Error", error.toString());
+                    }
+
+                });
+        RequestQueue queue =  VolleySingleton.getInstance(getContext()).getRequestQueue();
+        queue.add(jsonRequest);
+
+
+    }
+
 
 }
