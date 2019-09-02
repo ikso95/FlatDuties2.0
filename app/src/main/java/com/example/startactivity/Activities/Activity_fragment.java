@@ -1,9 +1,19 @@
 package com.example.startactivity.Activities;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.hardware.SensorManager;
+import android.icu.text.UnicodeSetSpanner;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +22,8 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -55,9 +68,15 @@ public class Activity_fragment extends Fragment {
     private FloatingActionButton add_duty;
 
     public List<ListItem> listItems;
+    public List<ListItem> newlistItems; //
     public ListItem listItem;
 
     private FloatingActionButton floatingActionButton;
+
+    private boolean first_run=true;
+    private int liczba;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -70,8 +89,9 @@ public class Activity_fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
 
         listItems = new ArrayList<>();
+        newlistItems = new ArrayList<>();   //
 
-        getDutiesData();
+        refresh();
 
         //hide fab when scrolling down
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -83,23 +103,31 @@ public class Activity_fragment extends Fragment {
                     floatingActionButton.show();
                 }
 
+
+                //if cant scroll down, list reaches top show our dab
+                if(!recyclerView.canScrollVertically(-1))
+                {
+                    floatingActionButton.show();
+                }
+
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+
+
 
 
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_refresh_duty_fragment);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //listItems.clear();
-                //getActivitiesData();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
+                        liczba=listItems.size(); //liczba dla notification
                         listItems.clear();
-                        getDutiesData();
+                        new listUpdate().execute();
                     }
                 },500);
             }
@@ -138,7 +166,10 @@ public class Activity_fragment extends Fragment {
                 if(duty_name.isShown()==false)
                 {
                     duty_name.setVisibility(View.VISIBLE);
+                    duty_name.setFocusable(true);
+
                     add_duty.show();
+
                     floatingActionButton.animate().rotationBy(-135.0f).setDuration(500);
                     floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent,null)));
                     floatingActionButton.animate().translationX(-170);
@@ -146,10 +177,10 @@ public class Activity_fragment extends Fragment {
                 }
                 else {
                     duty_name.setVisibility(View.INVISIBLE);
-                    add_duty.hide();
                     duty_name.setText("");
                     duty_name.setError(null);
 
+                    add_duty.hide();
 
                     floatingActionButton.animate().rotationBy(135.0f).setDuration(500);
                     floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
@@ -159,15 +190,79 @@ public class Activity_fragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
         return view;
     }
+
+
+    public void refresh(){
+
+        final Handler refreshHandler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+
+                if(first_run==false)
+                {
+                    liczba=listItems.size();
+                }
+
+                    //showNotification();
+
+                listItems.clear();
+                new listUpdate().execute();
+
+
+                //odswizanie co ... sekund
+                refreshHandler.postDelayed(this,  20*1000);
+            }
+        };
+        //czas pierwszego wykonania funkcji run()
+        refreshHandler.postDelayed(runnable, 100);
+    }
+
+
+    private void showNotification()
+    {
+
+        String CHANNEL_ID = "channel";
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "name";
+            String description = "description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+
+
+            NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Create an explicit intent for an Activity in your app
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.broom)
+                .setContentTitle("My notification")
+                .setContentText("Hello World!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(0, builder.build());
+
+    }
+
 
     private void addNewDutyToDB() {
         final ProgressDialog mDialog = new ProgressDialog(getContext());
@@ -184,7 +279,10 @@ public class Activity_fragment extends Fragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
+                        listItems.add(new ListItem());  //dodanie nowego obiektu żeby liczba się zgadzała, i nie było notofication rzy dodawaniu własnego duty
                         mDialog.dismiss();
+                        refresh();
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -217,6 +315,7 @@ public class Activity_fragment extends Fragment {
                         try {
                             JSONArray arry = response.getJSONArray("response");
 
+
                             for (int i=0; i<arry.length(); i++)
                             {
                                 JSONObject ob = arry.getJSONObject(i);
@@ -240,9 +339,17 @@ public class Activity_fragment extends Fragment {
                                             ob.getInt("Saturday"),ob.getInt("Sunday"));
                                 }
 
+
                                 listItems.add(listItem);
 
                             }
+
+                            Toast.makeText(getContext(),String.valueOf(liczba),Toast.LENGTH_SHORT).show();
+                            if(listItems.size()>liczba && first_run==false)
+                            {
+                                showNotification();
+                            }
+                            first_run=false;
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -267,5 +374,17 @@ public class Activity_fragment extends Fragment {
 
 
 
+
+
+    //async task for updating  duties list
+    public class listUpdate extends AsyncTask<Void,Void,Void>
+    {
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            getDutiesData();
+            return null;
+        }
+    }
 
 }

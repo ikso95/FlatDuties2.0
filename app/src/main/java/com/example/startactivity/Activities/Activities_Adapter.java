@@ -3,6 +3,7 @@ package com.example.startactivity.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,6 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
     private List<ListItem> listItems ;
     private Context context;
 
-    private String names = "";
 
 
 
@@ -66,14 +66,14 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
         viewHolder.textViewDescription.setText(listItem.getDuty_description());
 
 
-
-
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 postActivityDone(listItem.getDutyId(),v);
                 listItems.remove(i);    //i-1?  !!!!!!!!!!!!!!!
                 notifyItemRemoved(i);           //informuje o usunietym elemencie !!! WAZNE
+
             }
         });
 
@@ -90,8 +90,6 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
 
         public TextView textViewNazwa;
         public TextView textViewDescription;
-
-
         public ImageButton button;
 
         public ViewHolder(@NonNull View itemView) {
@@ -117,7 +115,6 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
 
                     @Override
                     public void onResponse(JSONObject response) {
-
 
                     }
                 }, new Response.ErrorListener() {

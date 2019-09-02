@@ -51,7 +51,8 @@ public class ListItem {
         this.fromUserID = fromUserID;
     }
 
-
+    public ListItem() {
+    }
 
     public int getDutyId() {
         return dutyId;
