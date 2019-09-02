@@ -99,7 +99,20 @@ public class Activity_fragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if(dy > 5){
-                    floatingActionButton.hide();
+                    if(add_duty.getVisibility()==View.VISIBLE)
+                    {
+                        floatingActionButton.hide();
+                        floatingActionButton.animate().rotationBy(135.0f).setDuration(500);
+                        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
+                        floatingActionButton.animate().translationX(0);
+                        add_duty.hide();
+                        duty_name.setVisibility(View.INVISIBLE);
+                    }
+                    else
+                    {
+                        floatingActionButton.hide();
+                    }
+
                 } else if(dy<-5){
                     floatingActionButton.show();
                 }
@@ -168,9 +181,6 @@ public class Activity_fragment extends Fragment {
                 {
                     duty_name.setVisibility(View.VISIBLE);
                     duty_name.requestFocus();
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
                     add_duty.show();
 
                     floatingActionButton.animate().rotationBy(-135.0f).setDuration(500);
@@ -182,9 +192,6 @@ public class Activity_fragment extends Fragment {
                     duty_name.setVisibility(View.INVISIBLE);
                     duty_name.setText("");
                     duty_name.setError(null);
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-
                     add_duty.hide();
 
                     floatingActionButton.animate().rotationBy(135.0f).setDuration(500);

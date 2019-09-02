@@ -34,8 +34,6 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
     private Context context;
 
 
-
-
     public Activities_Adapter(List<ListItem> listItems, Context context) {
         this.listItems = listItems;
         this.context = context;
@@ -71,8 +69,8 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
             public void onClick(View v) {
 
                 postActivityDone(listItem.getDutyId(),v);
-                listItems.remove(i);    //i-1?  !!!!!!!!!!!!!!!
-                notifyItemRemoved(i);           //informuje o usunietym elemencie !!! WAZNE
+                listItems.remove(i);
+                notifyItemRemoved(i);           //informuje o usunietym elemencie
 
             }
         });
@@ -108,6 +106,10 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
 
     private void postActivityDone(final int id, final View v)
     {
+        final ProgressDialog mDialog = new ProgressDialog(context);
+        mDialog.setMessage("Please wait...");
+        mDialog.show();
+
         String url = Common.getUrl()+"deleteDuty/"+id;
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -115,15 +117,14 @@ public class Activities_Adapter extends RecyclerView.Adapter<Activities_Adapter.
 
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        mDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        mDialog.dismiss();
                         error.printStackTrace();
-                        //Toast.makeText(Add_activity.this, "Connection error", Toast.LENGTH_SHORT ).show();
                         Log.d("Error", error.toString());
                     }
 
