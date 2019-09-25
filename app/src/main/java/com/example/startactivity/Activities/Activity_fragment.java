@@ -1,25 +1,17 @@
 package com.example.startactivity.Activities;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.hardware.SensorManager;
-import android.icu.text.UnicodeSetSpanner;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -31,11 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -55,8 +43,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.microedition.khronos.egl.EGLDisplay;
-
 
 public class Activity_fragment extends Fragment {
 
@@ -65,12 +51,12 @@ public class Activity_fragment extends Fragment {
     private Activities_Adapter adapter;
 
     private EditText duty_name;
-    private FloatingActionButton add_duty;
+    private FloatingActionButton send_fab;
 
     public List<ListItem> listItems;
     public ListItem listItem;
 
-    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton plus_fab;
 
     private boolean first_run=true;
     private int liczba;
@@ -97,29 +83,29 @@ public class Activity_fragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if(dy > 5){
-                    if(add_duty.getVisibility()==View.VISIBLE)
+                    if(send_fab.getVisibility()==View.VISIBLE)
                     {
-                        floatingActionButton.hide();
-                        floatingActionButton.animate().rotationBy(135.0f).setDuration(500);
-                        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
-                        floatingActionButton.animate().translationX(0);
-                        add_duty.hide();
+                        plus_fab.hide();
+                        plus_fab.animate().rotationBy(135.0f).setDuration(500);
+                        plus_fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
+                        plus_fab.animate().translationX(0);
+                        send_fab.hide();
                         duty_name.setVisibility(View.INVISIBLE);
                     }
                     else
                     {
-                        floatingActionButton.hide();
+                        plus_fab.hide();
                     }
 
                 } else if(dy<-5){
-                    floatingActionButton.show();
+                    plus_fab.show();
                 }
 
 
                 //if cant scroll down, list reaches top show our dab
                 if(!recyclerView.canScrollVertically(-1))
                 {
-                    floatingActionButton.show();
+                    plus_fab.show();
                 }
 
                 super.onScrolled(recyclerView, dx, dy);
@@ -146,9 +132,9 @@ public class Activity_fragment extends Fragment {
         });
 
         duty_name = (EditText)view.findViewById(R.id.duty_input_editText_duty_fragment);
-        add_duty = (FloatingActionButton) view.findViewById(R.id.send_new_duty_button_activity_fragment);
+        send_fab = (FloatingActionButton) view.findViewById(R.id.send_new_duty_button_activity_fragment);
 
-        add_duty.setOnClickListener(new View.OnClickListener() {
+        send_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (duty_name.getText().toString().trim().length()==0)
@@ -160,42 +146,42 @@ public class Activity_fragment extends Fragment {
 
                     duty_name.setText("");
                     duty_name.setVisibility(View.INVISIBLE);
-                    add_duty.hide();
+                    send_fab.hide();
 
 
-                    floatingActionButton.animate().rotationBy(135.0f).setDuration(500);
-                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
-                    floatingActionButton.animate().translationX(0);
+                    plus_fab.animate().rotationBy(135.0f).setDuration(500);
+                    plus_fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
+                    plus_fab.animate().translationX(0);
                 }
 
             }
         });
 
 
-        floatingActionButton = (FloatingActionButton)view.findViewById(R.id.floating_action_button);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        plus_fab = (FloatingActionButton)view.findViewById(R.id.plus_floating_action_button);
+        plus_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(duty_name.isShown()==false)
                 {
                     duty_name.setVisibility(View.VISIBLE);
                     duty_name.requestFocus();
-                    add_duty.show();
+                    send_fab.show();
 
-                    floatingActionButton.animate().rotationBy(-135.0f).setDuration(500);
-                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent,null)));
-                    floatingActionButton.animate().translationX(-170);
+                    plus_fab.animate().rotationBy(-135.0f).setDuration(500);
+                    plus_fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent,null)));
+                    plus_fab.animate().translationX(-170);
 
                 }
                 else {
                     duty_name.setVisibility(View.INVISIBLE);
                     duty_name.setText("");
                     duty_name.setError(null);
-                    add_duty.hide();
+                    send_fab.hide();
 
-                    floatingActionButton.animate().rotationBy(135.0f).setDuration(500);
-                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
-                    floatingActionButton.animate().translationX(0);
+                    plus_fab.animate().rotationBy(135.0f).setDuration(500);
+                    plus_fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary,null)));
+                    plus_fab.animate().translationX(0);
 
                 }
             }

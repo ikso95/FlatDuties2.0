@@ -70,4 +70,5 @@
     <string name="Friday">Friday</string>
     <string name="Saturday">Saturday</string>
     <string name="Sunday">Sunday</string>
+    <string name="New_shopping_item">New Item</string>
 </resources>

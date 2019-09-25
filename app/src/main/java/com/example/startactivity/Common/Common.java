@@ -12,8 +12,8 @@ public class Common {
     public static User currentUser;
 
 
-    //public static String url="http://192.168.0.178:8888/api/";  //wroclaw
-    public static String url="http://192.168.1.15:8888/api/"; //opole
+    public static String url="http://192.168.0.178:8888/api/";  //wroclaw
+    //public static String url="http://192.168.1.19:8888/api/"; //opole
 
     public static String img_url="http://192.168.0.178:8888/public/";
 
