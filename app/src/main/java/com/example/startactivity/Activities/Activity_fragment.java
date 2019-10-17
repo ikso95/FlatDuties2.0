@@ -19,6 +19,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +41,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Activity_fragment extends Fragment {
@@ -273,8 +281,39 @@ public class Activity_fragment extends Fragment {
 
     public void getDutiesData()
     {
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        String dayName="";
+
+        switch (day) {
+            case Calendar.SUNDAY:
+                 dayName="Sunday";
+                break;
+            case Calendar.MONDAY:
+                dayName="Monday";
+                break;
+            case Calendar.TUESDAY:
+                dayName="Tuesday";
+                break;
+            case Calendar.WEDNESDAY:
+                dayName="Wednesday";
+                break;
+            case Calendar.THURSDAY:
+                dayName="Thursday";
+                break;
+            case Calendar.FRIDAY:
+                dayName="Friday";
+                break;
+            case Calendar.SATURDAY:
+                dayName="Saturday";
+                break;
+        }
+        Log.d("day", dayName);
+
         //ustawienie url zgodnego z api
-        String url = Common.getUrl()+"getDutiesData/"+String.valueOf(Common.currentUser.getGroupID());
+        //String url = Common.getUrl()+"getDutiesData/"+String.valueOf(Common.currentUser.getGroupID());
+        String url = Common.getUrl()+"getDutiesData/"+String.valueOf(Common.currentUser.getGroupID())+"/"+dayName;
+        Log.d("url", url);
 
         //pobranie danych z bazy w formie jsona
         JsonObjectRequest jsonRequest = new JsonObjectRequest

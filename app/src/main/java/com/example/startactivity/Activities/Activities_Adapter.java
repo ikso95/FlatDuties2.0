@@ -26,6 +26,8 @@ import com.example.startactivity.R;
 
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -50,6 +52,8 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
 
+
+
         if(listItems.get(position).getDuty_description()!=null)
         {
             return 1;
@@ -60,7 +64,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 listItems.get(position).getSunday()==0 )
         {
             return 3;
-        }
+         }
         else
         {
             return 2;
@@ -76,15 +80,15 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if(viewType==1)
         {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.duty_item,parent,false);
-            viewHolder = new ViewHolder1(view);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.duty_item4,parent,false);
+            viewHolder = new ViewHolder4(view);
         }
         else if (viewType==2)
         {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.duty_item2,parent,false);
             viewHolder= new ViewHolder2(view);
         }
-        else
+        else if(viewType==3)
         {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.duty_item3,parent,false);
             viewHolder= new ViewHolder3(view);
@@ -101,45 +105,15 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if(holder.getItemViewType()==1)
         {
-            ViewHolder1 vaultItemHolder = (ViewHolder1) holder;
-            ((ViewHolder1) holder).textViewNazwa.setText(listItems.get(position).getDuty_name());
-            ((ViewHolder1) holder).textViewDescription.setText(listItems.get(position).getDuty_description());
+            ViewHolder4 vaultItemHolder = (ViewHolder4) holder;
+            ((ViewHolder4) holder).textViewNazwa.setText(listItems.get(position).getDuty_name());
+            ((ViewHolder4) holder).textViewDescription.setText(listItems.get(position).getDuty_description());
 
-            String day = "";
-            if(listItems.get(position).getMonday()==1)
-            {
-                day=day+"Mon ";
-            }
-            if(listItems.get(position).getTuesday()==1)
-            {
-                day=day+"Tu ";
-            }
-            if(listItems.get(position).getWednesday()==1)
-            {
-                day=day+"Wen ";
-            }
-            if(listItems.get(position).getThursday()==1)
-            {
-                day=day+"Thu ";
-            }
-            if(listItems.get(position).getFriday()==1)
-            {
-                day=day+"Fri ";
-            }
-            if(listItems.get(position).getSaturday()==1)
-            {
-                day=day+"Sat ";
-            }
-            if(listItems.get(position).getSunday()==1)
-            {
-                day=day+"Su ";
-            }
-            ((ViewHolder1) holder).textViewDay.setText(day);
 
-            ((ViewHolder1) holder).button.setOnClickListener(new View.OnClickListener() {
+            ((ViewHolder4) holder).button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new DeleteDuty().doInBackground(listItems.get(position).getDutyId());
+                    //new DeleteDuty().doInBackground(listItems.get(position).getDutyId());
                     listItems.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position,listItems.size());
@@ -153,40 +127,11 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ViewHolder2 vaultItemHolder = (ViewHolder2) holder;
             ((ViewHolder2) holder).textViewNazwa.setText(listItems.get(position).getDuty_name());
 
-            String day = "";
-            if(listItems.get(position).getMonday()==1)
-            {
-                day=day+"Mon ";
-            }
-            if(listItems.get(position).getTuesday()==1)
-            {
-                day=day+"Tu ";
-            }
-            if(listItems.get(position).getWednesday()==1)
-            {
-                day=day+"Wen ";
-            }
-            if(listItems.get(position).getThursday()==1)
-            {
-                day=day+"Thu ";
-            }
-            if(listItems.get(position).getFriday()==1)
-            {
-                day=day+"Fri ";
-            }
-            if(listItems.get(position).getSaturday()==1)
-            {
-                day=day+"Sat ";
-            }
-            if(listItems.get(position).getSunday()==1)
-            {
-                day=day+"Su ";
-            }
-            ((ViewHolder2) holder).textViewDay.setText(day);
+
             ((ViewHolder2) holder).button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new DeleteDuty().doInBackground(listItems.get(position).getDutyId());
+                    //new DeleteDuty().doInBackground(listItems.get(position).getDutyId());
                     listItems.remove(position);
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position,listItems.size());
@@ -239,14 +184,12 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public class ViewHolder2 extends RecyclerView.ViewHolder{
 
         public TextView textViewNazwa;
-        public TextView textViewDay;
         public ImageButton button;
 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
 
             textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item2);
-            textViewDay = (TextView)itemView.findViewById(R.id.day_textView_duty_item2);
             button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item2);
         }
     }
@@ -264,7 +207,35 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    public class ViewHolder4 extends RecyclerView.ViewHolder{
 
+        public TextView textViewNazwa;
+        public ImageButton button;
+        public TextView textViewDescription;
+
+
+        public ViewHolder4(@NonNull View itemView) {
+            super(itemView);
+
+            textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item4);
+            button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item4);
+            textViewDescription = (TextView)itemView.findViewById(R.id.duty_desc_textView_duty_item4);
+        }
+    }
+
+
+
+
+
+
+    public class DeleteDuty extends AsyncTask<Integer,Void,Void>
+    {
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            postActivityDone(integers[0]);
+            return null;
+        }
+    }
 
     private void postActivityDone(final int id)
     {
@@ -293,16 +264,6 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 });
         RequestQueue queue =  VolleySingleton.getInstance(context.getApplicationContext()).getRequestQueue();
         queue.add(jsonRequest);
-    }
-
-
-    public class DeleteDuty extends AsyncTask<Integer,Void,Void>
-    {
-        @Override
-        protected Void doInBackground(Integer... integers) {
-            postActivityDone(integers[0]);
-            return null;
-        }
     }
 
 
