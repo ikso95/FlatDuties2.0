@@ -461,19 +461,26 @@ public class EditCyclicalDuty extends AppCompatActivity {
     {
         @Override
         protected Void doInBackground(Void... voids) {
-            updateCyclicalDutyData();
+
+            if(duty_description.getText().toString().equals(""))
+            {
+                Log.d("qwert","empty");
+                updateCyclicalDutyDataWithoutDesc();
+            }
+            else
+            {
+                Log.d("qwert","not empty");
+                updateCyclicalDutyData();
+            }
+
             return null;
         }
     }
 
     private void updateCyclicalDutyData() {
 
-        /*final ProgressDialog mDialog = new ProgressDialog(EditCyclicalDuty.this);
-        mDialog.setMessage("Please wait...");
-        mDialog.show();*/
-
         String url = Common.getUrl()+"updateCyclicalDutyData/"+String.valueOf(dutyID)+"/"+duty_name.getText().toString().trim()+"/"+
-                duty_description.getText().toString()+"/"+String.valueOf(Common.currentUser.getGroupID())+"/"+
+                duty_description.getText().toString().trim()+"/"+String.valueOf(Common.currentUser.getGroupID())+"/"+
                 String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID+"/"+ mondayInt+"/"+
                 tuesdayInt+"/"+wednesdayInt+"/"+thursdayInt+"/"+fridayInt+"/"+saturdayInt+"/"+sundayInt;
 
@@ -484,17 +491,44 @@ public class EditCyclicalDuty extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        //mDialog.dismiss();
 
-                        /*Intent intent = new Intent(EditCyclicalDuty.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();*/
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //mDialog.dismiss();
+
+                        error.printStackTrace();
+                        Toast.makeText(EditCyclicalDuty.this, "Connection error", Toast.LENGTH_SHORT ).show();
+                        Log.d("Error", error.toString());
+                    }
+
+                });
+        RequestQueue queue =  VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
+        queue.add(jsonRequest);
+
+    }
+
+    private void updateCyclicalDutyDataWithoutDesc() {
+
+        String url = Common.getUrl()+"updateCyclicalDutyDataWithoutDesc/"+String.valueOf(dutyID)+"/"+duty_name.getText().toString().trim()+"/"+
+                String.valueOf(Common.currentUser.getGroupID())+"/"+
+                String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID+"/"+ mondayInt+"/"+
+                tuesdayInt+"/"+wednesdayInt+"/"+thursdayInt+"/"+fridayInt+"/"+saturdayInt+"/"+sundayInt;
+
+        zadDlaID="";
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                         Toast.makeText(EditCyclicalDuty.this, "Connection error", Toast.LENGTH_SHORT ).show();
                         Log.d("Error", error.toString());

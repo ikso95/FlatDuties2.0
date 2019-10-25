@@ -67,8 +67,8 @@ public class Shopping_Adapter extends RecyclerView.Adapter<Shopping_Adapter.View
             public void onClick(View v) {
 
                 new Shopping_Adapter.DeleteShoppingItem().doInBackground(listItems.get(position).getShoppingID());
-                listItems.remove(position);    //i-1?  !!!!!!!!!!!!!!!
-                notifyItemRemoved(position);           //informuje o usunietym elemencie !!! WAZNE
+                listItems.remove(position);
+                notifyItemRemoved(position);
             }
         });
 
@@ -99,9 +99,9 @@ public class Shopping_Adapter extends RecyclerView.Adapter<Shopping_Adapter.View
 
     private void deleteShoppingItem(final int id)
     {
-        final ProgressDialog mDialog = new ProgressDialog(context);
+        /*final ProgressDialog mDialog = new ProgressDialog(context);
         mDialog.setMessage("Please wait...");
-        mDialog.show();
+        mDialog.show();*/
 
         String url = Common.getUrl()+"deleteShoppingItem/"+id;
 
@@ -110,13 +110,13 @@ public class Shopping_Adapter extends RecyclerView.Adapter<Shopping_Adapter.View
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        mDialog.dismiss();
+                        //mDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
+                        //mDialog.dismiss();
                         error.printStackTrace();
                         Log.d("Error", error.toString());
                     }

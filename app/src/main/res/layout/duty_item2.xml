@@ -34,7 +34,7 @@
                 android:id="@+id/manage_duty_item2"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/calendar"
+                android:background="@drawable/edit"
                 android:layout_toLeftOf="@id/ok_button_duty_item2"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"/>

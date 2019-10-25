@@ -282,9 +282,9 @@ public class Shopping_fragment extends Fragment {
     }
 
     private void addNewShoppingItemToDB() {
-        final ProgressDialog mDialog = new ProgressDialog(getContext());
+        /*final ProgressDialog mDialog = new ProgressDialog(getContext());
         mDialog.setMessage("Please wait...");
-        mDialog.show();
+        mDialog.show();*/
 
         String url = Common.getUrl()+"postShoppingItem/"+item_name_input.getText().toString().trim()+"/"+
                 String.valueOf(Common.currentUser.getGroupID());
@@ -297,7 +297,7 @@ public class Shopping_fragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         listItems.add(new ShoppingItem());  //dodanie nowego obiektu żeby liczba się zgadzała, i nie było notofication rzy dodawaniu własnego duty
                         liczba=listItems.size();
-                        mDialog.dismiss();
+                        //mDialog.dismiss();
                         listItems.clear();
                         new Shopping_fragment.listUpdate().execute();
 
@@ -306,7 +306,7 @@ public class Shopping_fragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
+                        //mDialog.dismiss();
                         error.printStackTrace();
                         Toast.makeText(getContext(), "Connection error", Toast.LENGTH_SHORT ).show();
                         Log.d("Error", error.toString());
