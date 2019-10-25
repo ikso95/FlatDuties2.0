@@ -1,43 +1,45 @@
-package com.example.startactivity.Activities;
+package com.example.startactivity.Activities.ManageDuties;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.app.AlertDialog;
+        import android.app.ProgressDialog;
+        import android.content.DialogInterface;
+        import android.content.Intent;
+        import android.os.AsyncTask;
+        import android.support.design.widget.FloatingActionButton;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.support.v7.widget.LinearLayoutManager;
+        import android.support.v7.widget.RecyclerView;
+        import android.util.Log;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.CheckBox;
+        import android.widget.EditText;
+        import android.widget.LinearLayout;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.startactivity.Activities.ManageDuties.EditCyclicalDuty;
-import com.example.startactivity.Common.Common;
-import com.example.startactivity.Common.VolleySingleton;
-import com.example.startactivity.Main.MainActivity;
-import com.example.startactivity.Models.User;
-import com.example.startactivity.R;
+        import com.android.volley.Request;
+        import com.android.volley.RequestQueue;
+        import com.android.volley.Response;
+        import com.android.volley.VolleyError;
+        import com.android.volley.toolbox.JsonObjectRequest;
+        import com.example.startactivity.Activities.Adapter_user;
+        import com.example.startactivity.Common.Common;
+        import com.example.startactivity.Common.VolleySingleton;
+        import com.example.startactivity.Main.MainActivity;
+        import com.example.startactivity.Models.User;
+        import com.example.startactivity.R;
+        import com.example.startactivity.Shopping.Shopping_fragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.List;
 
-public class NewCyclicalDuty extends AppCompatActivity {
+public class EditCyclicalDuty extends AppCompatActivity {
 
     private EditText duty_name;
     private EditText duty_description;
@@ -65,7 +67,7 @@ public class NewCyclicalDuty extends AppCompatActivity {
     private CheckBox sunday_checkbox;
     private int sundayInt;
 
-    private FloatingActionButton add_duty;
+    private FloatingActionButton updateCyclicalDuty;
     private FloatingActionButton cancel;
 
     private LinearLayoutManager layoutManager;
@@ -75,12 +77,18 @@ public class NewCyclicalDuty extends AppCompatActivity {
 
     private String zadDlaID = "";
 
+    private String name,description, dutyForUserID;
+    private int dutyID, dutyMonday,dutyTuesday, dutyWednesday,dutyThursday,dutyFriday,dutySaturday,dutySunday;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_cyclical_duty);
-        setTitle(R.string.New_duty);
+        setTitle(R.string.Edit_duty);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         monday_checkbox = (CheckBox)findViewById(R.id.monday_checkbox_new_cyclical_duty);
         monday = (TextView)findViewById(R.id.monday_textView_new_cyclical_duty);
@@ -185,10 +193,11 @@ public class NewCyclicalDuty extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog alertDialog = new AlertDialog.Builder(NewCyclicalDuty.this)
+
+                AlertDialog alertDialog = new AlertDialog.Builder(EditCyclicalDuty.this)
                         .setIcon(R.drawable.alert)
                         .setTitle("Are you sure to Exit?")
-                        .setMessage("Data will not be saved")
+                        .setMessage("New data will not be saved")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -204,12 +213,14 @@ public class NewCyclicalDuty extends AppCompatActivity {
                             }
                         })
                         .show();
+
+
             }
         });
 
 
-        add_duty = (FloatingActionButton)findViewById(R.id.add_cyclical_duty_floating_button);
-        add_duty.setOnClickListener(new View.OnClickListener() {
+        updateCyclicalDuty = (FloatingActionButton)findViewById(R.id.add_cyclical_duty_floating_button);
+        updateCyclicalDuty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -217,96 +228,93 @@ public class NewCyclicalDuty extends AppCompatActivity {
                 {
                     createForIDString();
 
-                    if(duty_description.getText().toString().trim().length()==0)
-                    {
-                        addCyclicalDutyWithoutDesc();
-                    }
-                    else
-                    {
-                        addCyclicalDuty();
-                    }
-
-
+                    new upadateDutyData().execute();
+                    Intent intent = new Intent(EditCyclicalDuty.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    //updateCyclicalDutyData();
                 }
+
             }
         });
 
+        loadDutiesData();
+
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if(checkInput()==true)
-            {
-                AlertDialog alertDialog = new AlertDialog.Builder(NewCyclicalDuty.this)
-                        .setIcon(R.drawable.alert)
-                        .setTitle("Are you sure to Exit?")
-                        .setMessage("Data will not be saved")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //set what would happen when positive button is clicked
-                                finish();
-                            }
-                        })
+            AlertDialog alertDialog = new AlertDialog.Builder(EditCyclicalDuty.this)
+                    .setIcon(R.drawable.alert)
+                    .setTitle("Are you sure to Exit?")
+                    .setMessage("Data will not be saved")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what would happen when positive button is clicked
+                            finish();
+                        }
+                    })
 
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //set what should happen when negative button is clicked
-                            }
-                        })
-                        .show();
-            }
-            else
-            {
-                finish();
-            }
-
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what should happen when negative button is clicked
+                        }
+                    })
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void addCyclicalDutyWithoutDesc() {
-        final ProgressDialog mDialog = new ProgressDialog(NewCyclicalDuty.this);
-        mDialog.setMessage("Please wait...");
-        mDialog.show();
 
-        String url = Common.getUrl()+"addNewCyclicalDutyWithoutDesc/"+duty_name.getText().toString().trim()+"/"+
-                String.valueOf(Common.currentUser.getGroupID())+"/"+
-                String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID+"/"+mondayInt+"/"+
-                tuesdayInt+"/"+wednesdayInt+"/"+thursdayInt+"/"+fridayInt+"/"+saturdayInt+"/"+sundayInt;
+    private void loadDutiesData()
+    {
+        Bundle extras = getIntent().getExtras();
+        dutyID = extras.getInt("dutyID",0);
+        name= extras.getString("dutyName");
+        description = extras.getString("dutyDesc");
+        dutyForUserID = extras.getString("dutyForUserID");
+        dutyMonday = extras.getInt("dutyMonday",0);
+        dutyTuesday = extras.getInt("dutyTuesday",0);
+        dutyWednesday = extras.getInt("dutyWednesday",0);
+        dutyThursday = extras.getInt("dutyThursday",0);
+        dutyFriday = extras.getInt("dutyFriday",0);
+        dutySaturday = extras.getInt("dutySaturday",0);
+        dutySunday = extras.getInt("dutySunday",0);
 
-        zadDlaID="";
+        duty_name.setText(name);
+        duty_description.setText(description);
+        if(dutyMonday==1){
+            monday_checkbox.setChecked(true);
+        }
+        if(dutyTuesday==1){
+            tuesday_checkbox.setChecked(true);
+        }
+        if(dutyWednesday==1){
+            wednesday_checkbox.setChecked(true);
+        }
+        if(dutyThursday==1){
+            thursday_checkbox.setChecked(true);
+        }
+        if(dutyFriday==1){
+            friday_checkbox.setChecked(true);
+        }
+        if(dutySaturday==1){
+            saturday_checkbox.setChecked(true);
+        }
+        if(dutySunday==1){
+            sunday_checkbox.setChecked(true);
+        }
 
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        mDialog.dismiss();
-
-                        Intent intent = new Intent(NewCyclicalDuty.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(NewCyclicalDuty.this, "Connection error", Toast.LENGTH_SHORT ).show();
-                        Log.d("Error", error.toString());
-                    }
-
-                });
-        RequestQueue queue =  VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
-        queue.add(jsonRequest);
     }
+
+
+
 
 
     private void createForIDString() {
@@ -320,45 +328,7 @@ public class NewCyclicalDuty extends AppCompatActivity {
         }
     }
 
-    private void addCyclicalDuty() {
 
-        final ProgressDialog mDialog = new ProgressDialog(NewCyclicalDuty.this);
-        mDialog.setMessage("Please wait...");
-        mDialog.show();
-
-        String url = Common.getUrl()+"addNewCyclicalDuty/"+duty_name.getText().toString().trim()+"/"+
-                duty_description.getText().toString()+"/"+String.valueOf(Common.currentUser.getGroupID())+"/"+
-                String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID+"/"+ mondayInt+"/"+
-                tuesdayInt+"/"+wednesdayInt+"/"+thursdayInt+"/"+fridayInt+"/"+saturdayInt+"/"+sundayInt;
-
-        zadDlaID="";
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest
-                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        mDialog.dismiss();
-
-                        Intent intent = new Intent(NewCyclicalDuty.this,MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
-                        error.printStackTrace();
-                        Toast.makeText(NewCyclicalDuty.this, "Connection error", Toast.LENGTH_SHORT ).show();
-                        Log.d("Error", error.toString());
-                    }
-
-                });
-        RequestQueue queue =  VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
-        queue.add(jsonRequest);
-
-    }
 
 
     private boolean checkInput() {
@@ -430,7 +400,25 @@ public class NewCyclicalDuty extends AppCompatActivity {
         if(duty_name.getText().toString().trim().length()!=0 && checked_users!=0 && checked_days!=0)
             return true;
         else
+        {
+            if(checked_users==0)
+            {
+                AlertDialog alertDialog = new AlertDialog.Builder(this)
+                        .setIcon(R.drawable.alert)
+                        .setTitle("Please select the person")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what would happen when positive button is clicked
+
+                            }
+                        })
+                        .show();
+            }
             return false;
+
+        }
+
 
     }
 
@@ -462,9 +450,61 @@ public class NewCyclicalDuty extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(NewCyclicalDuty.this, "Connection error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditCyclicalDuty.this, "Connection error", Toast.LENGTH_SHORT).show();
                     }
                 });
-        VolleySingleton.getInstance(NewCyclicalDuty.this).addToRequestQueue(jsonRequest);
+        VolleySingleton.getInstance(EditCyclicalDuty.this).addToRequestQueue(jsonRequest);
     }
+
+
+    public class upadateDutyData extends AsyncTask<Void,Void,Void>
+    {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            updateCyclicalDutyData();
+            return null;
+        }
+    }
+
+    private void updateCyclicalDutyData() {
+
+        /*final ProgressDialog mDialog = new ProgressDialog(EditCyclicalDuty.this);
+        mDialog.setMessage("Please wait...");
+        mDialog.show();*/
+
+        String url = Common.getUrl()+"updateCyclicalDutyData/"+String.valueOf(dutyID)+"/"+duty_name.getText().toString().trim()+"/"+
+                duty_description.getText().toString()+"/"+String.valueOf(Common.currentUser.getGroupID())+"/"+
+                String.valueOf(Common.currentUser.getUzytkownikID())+"/"+zadDlaID+"/"+ mondayInt+"/"+
+                tuesdayInt+"/"+wednesdayInt+"/"+thursdayInt+"/"+fridayInt+"/"+saturdayInt+"/"+sundayInt;
+
+        zadDlaID="";
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //mDialog.dismiss();
+
+                        /*Intent intent = new Intent(EditCyclicalDuty.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();*/
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //mDialog.dismiss();
+                        error.printStackTrace();
+                        Toast.makeText(EditCyclicalDuty.this, "Connection error", Toast.LENGTH_SHORT ).show();
+                        Log.d("Error", error.toString());
+                    }
+
+                });
+        RequestQueue queue =  VolleySingleton.getInstance(getApplicationContext()).getRequestQueue();
+        queue.add(jsonRequest);
+
+    }
+
+
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="4dp"
+    app:cardElevation="5dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/duty_name_textView_manage_duties"
+            android:text="@string/Name"
+            android:textSize="25sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/cancel_button_manage_duties"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/delete"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <ImageButton
+            android:id="@+id/edit_button_manage_duties"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_toLeftOf="@+id/cancel_button_manage_duties"
+            android:layout_marginRight="10dp"
+            android:layout_alignTop="@+id/cancel_button_manage_duties"
+            android:background="@drawable/edit"
+            />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

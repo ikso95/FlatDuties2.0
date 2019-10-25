@@ -354,11 +354,11 @@ public class Activity_fragment extends Fragment {
                             }
 
                             //Toast.makeText(getContext(),String.valueOf(liczba),Toast.LENGTH_SHORT).show();
-                            if(listItems.size()>liczba && first_run==false)
+                            /*if(listItems.size()>liczba && first_run==false)
                             {
                                 showNotification();
                             }
-                            first_run=false;
+                            first_run=false;*/
 
                         } catch (JSONException e) {
                             e.printStackTrace();

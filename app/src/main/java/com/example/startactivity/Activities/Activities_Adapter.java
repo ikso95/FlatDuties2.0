@@ -2,6 +2,7 @@ package com.example.startactivity.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.startactivity.Activities.ManageDuties.ManageDuties;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Common.VolleySingleton;
 import com.example.startactivity.R;
@@ -120,6 +122,15 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
 
+            ((ViewHolder4)holder).manage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ManageDuties.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+
 
         }
         else if (holder.getItemViewType() == 2){
@@ -137,6 +148,16 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     notifyItemRangeChanged(position,listItems.size());
                 }
             });
+
+            ((ViewHolder2)holder).manage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ManageDuties.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+
 
         }
         else if (holder.getItemViewType() == 3)
@@ -176,7 +197,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item);
             textViewDescription = (TextView)itemView.findViewById(R.id.duty_desc_textView_duty_item);
-            textViewDay = (TextView)itemView.findViewById(R.id.day_textView_duty_item);
+            //textViewDay = (TextView)itemView.findViewById(R.id.day_textView_duty_item);
             button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item);
         }
     }
@@ -185,12 +206,14 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public TextView textViewNazwa;
         public ImageButton button;
+        public ImageButton manage;
 
         public ViewHolder2(@NonNull View itemView) {
             super(itemView);
 
             textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item2);
             button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item2);
+            manage = itemView.findViewById(R.id.manage_duty_item2);
         }
     }
 
@@ -210,6 +233,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public class ViewHolder4 extends RecyclerView.ViewHolder{
 
         public TextView textViewNazwa;
+        public ImageButton manage;
         public ImageButton button;
         public TextView textViewDescription;
 
@@ -218,6 +242,7 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(itemView);
 
             textViewNazwa = (TextView)itemView.findViewById(R.id.duty_name_textView_duty_item4);
+            manage = itemView.findViewById(R.id.manage_duty_item4);
             button = (ImageButton)itemView.findViewById(R.id.ok_button_duty_item4);
             textViewDescription = (TextView)itemView.findViewById(R.id.duty_desc_textView_duty_item4);
         }

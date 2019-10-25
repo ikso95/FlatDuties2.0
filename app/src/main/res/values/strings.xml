@@ -62,7 +62,7 @@
     <string name="Description">Description</string>
     <string name="To_do_for">To do for:</string>
     <string name="Do_every">Do every:</string>
-    <string name="manage_duties">Menage duties</string>
+    <string name="manage_duties">Manage duties</string>
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
     <string name="Wednesday">Wednesday</string>
@@ -71,4 +71,5 @@
     <string name="Saturday">Saturday</string>
     <string name="Sunday">Sunday</string>
     <string name="New_shopping_item">New Item</string>
+    <string name="Edit_duty">Edit duty</string>
 </resources>

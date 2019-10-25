@@ -26,10 +26,11 @@
             android:text="Name"
             android:textSize="20sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_action_calendar_day"
+        <ImageButton
+            android:id="@+id/manage_duty_item4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/calendar"
             android:layout_toLeftOf="@id/ok_button_duty_item4"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"/>

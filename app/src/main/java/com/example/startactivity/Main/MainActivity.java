@@ -11,13 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.startactivity.Activities.Activity_fragment;
+import com.example.startactivity.Activities.ManageDuties.ManageDuties;
 import com.example.startactivity.Activities.NewCyclicalDuty;
 import com.example.startactivity.Add_or_join_group.Create_new_group;
 import com.example.startactivity.Add_or_join_group.Join_group;
@@ -100,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.new_duty_drawer) {
             Intent intent = new Intent(MainActivity.this, NewCyclicalDuty.class);
             startActivity(intent);
-        } else if (id == R.id.menage_duties_drawer) {
-            //Intent intent = new Intent(MainActivity.this, MenageDuties.class);
-            //startActivity(intent);
+        } else if (id == R.id.manage_duties_drawer) {
+            Intent intent = new Intent(MainActivity.this, ManageDuties.class);
+            startActivity(intent);
         } else if (id == R.id.join_group_drawer) {
             Intent intent = new Intent(MainActivity.this, Join_group.class);
             startActivity(intent);

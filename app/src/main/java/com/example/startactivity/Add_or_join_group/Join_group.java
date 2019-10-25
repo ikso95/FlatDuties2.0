@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +51,8 @@ public class Join_group extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_group);
         setTitle(R.string.Join_group);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         group_name = (EditText)findViewById(R.id.group_name_editText_join_group);
         password1 = (EditText)findViewById(R.id.group_password_editText_join_group);
@@ -83,9 +86,15 @@ public class Join_group extends AppCompatActivity {
         });
 
 
+    }
 
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

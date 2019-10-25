@@ -25,7 +25,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
 
     private List<User> users = new ArrayList<>();
     SparseBooleanArray itemStateArray= new SparseBooleanArray();
-    Adapter_user() {
+    public Adapter_user() {
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
         return users.size();
     }
 
-    void loadItems(List<User> users) {
+    public void loadItems(List<User> users) {
         this.users=users;
         notifyDataSetChanged();
     }

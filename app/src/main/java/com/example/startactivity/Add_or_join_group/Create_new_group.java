@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,6 +65,8 @@ public class Create_new_group extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_group);
         setTitle(R.string.Create_and_join);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         group_name = (EditText)findViewById(R.id.new_group_name_editText_group);
@@ -87,6 +90,15 @@ public class Create_new_group extends AppCompatActivity {
         });
 
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
