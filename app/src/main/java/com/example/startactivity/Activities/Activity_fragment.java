@@ -62,6 +62,7 @@ public class Activity_fragment extends Fragment {
     private FloatingActionButton send_fab;
 
     public List<ListItem> listItems;
+
     public ListItem listItem;
 
     private FloatingActionButton plus_fab;
@@ -82,7 +83,6 @@ public class Activity_fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
 
         listItems = new ArrayList<>();
-
 
         refresh();
 
@@ -311,9 +311,7 @@ public class Activity_fragment extends Fragment {
         Log.d("day", dayName);
 
         //ustawienie url zgodnego z api
-        //String url = Common.getUrl()+"getDutiesData/"+String.valueOf(Common.currentUser.getGroupID());
         String url = Common.getUrl()+"getDutiesData/"+String.valueOf(Common.currentUser.getGroupID())+"/"+dayName;
-        Log.d("url", url);
 
         //pobranie danych z bazy w formie jsona
         JsonObjectRequest jsonRequest = new JsonObjectRequest
@@ -348,7 +346,6 @@ public class Activity_fragment extends Fragment {
                                             ob.getInt("Saturday"),ob.getInt("Sunday"));
                                 }
 
-
                                 listItems.add(listItem);
 
                             }
@@ -365,9 +362,10 @@ public class Activity_fragment extends Fragment {
                             Log.i("Error", e.getMessage());
                         }
 
-                        //
+
                         adapter = new Activities_Adapter(listItems,getContext());
                         recyclerView.setAdapter(adapter);
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -393,9 +391,6 @@ public class Activity_fragment extends Fragment {
     }
 
     private void addNewDutyToDB() {
-        final ProgressDialog mDialog = new ProgressDialog(getContext());
-        mDialog.setMessage("Please wait...");
-        mDialog.show();
 
         String url = Common.getUrl()+"addNewDuty/"+duty_name.getText().toString().trim()+"/"+
                 String.valueOf(Common.currentUser.getGroupID())+"/"+String.valueOf(Common.currentUser.getUzytkownikID());
@@ -409,7 +404,6 @@ public class Activity_fragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         listItems.add(new ListItem());  //dodanie nowego obiektu żeby liczba się zgadzała, i nie było notofication rzy dodawaniu własnego duty
                         liczba=listItems.size();
-                        mDialog.dismiss();
                         listItems.clear();
                         new listUpdate().execute();
 
@@ -418,7 +412,6 @@ public class Activity_fragment extends Fragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
                         error.printStackTrace();
                         Toast.makeText(getContext(), "Connection error", Toast.LENGTH_SHORT ).show();
                         Log.d("Error", error.toString());

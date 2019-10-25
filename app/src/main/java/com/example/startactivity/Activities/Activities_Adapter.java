@@ -299,9 +299,6 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private void postActivityDone(final int id)
     {
-        final ProgressDialog mDialog = new ProgressDialog(context);
-        mDialog.setMessage("Please wait...");
-        mDialog.show();
 
         String url = Common.getUrl()+"deleteDuty/"+id;
 
@@ -310,13 +307,13 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        mDialog.dismiss();
+
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        mDialog.dismiss();
+
                         error.printStackTrace();
                         Log.d("Error", error.toString());
                     }
