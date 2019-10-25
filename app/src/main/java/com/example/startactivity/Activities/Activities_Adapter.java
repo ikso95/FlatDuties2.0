@@ -21,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.startactivity.Activities.ManageDuties.EditCyclicalDuty;
 import com.example.startactivity.Activities.ManageDuties.ManageDuties;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Common.VolleySingleton;
@@ -125,9 +126,26 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolder4)holder).manage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ManageDuties.class);
+                    ListItem listItem = listItems.get(position);
+                    Intent intent = new Intent(context, EditCyclicalDuty.class);
+
+                    intent.putExtra("dutyID",       listItem.getDutyId());
+                    intent.putExtra("dutyName",     listItem.getDuty_name());
+                    intent.putExtra("dutyDesc",     listItem.getDuty_description());
+                    intent.putExtra("dutyForUserID",listItem.getForUserID());
+                    intent.putExtra("dutyMonday",   listItem.getMonday());
+                    intent.putExtra("dutyTuesday",  listItem.getTuesday());
+                    intent.putExtra("dutyWednesday",listItem.getWednesday());
+                    intent.putExtra("dutyThursday", listItem.getThursday());
+                    intent.putExtra("dutyFriday",   listItem.getFriday());
+                    intent.putExtra("dutySaturday", listItem.getSaturday());
+                    intent.putExtra("dutySunday",   listItem.getSunday());
+
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
+                    //Intent intent = new Intent(context, ManageDuties.class);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //context.startActivity(intent);
                 }
             });
 
@@ -152,9 +170,26 @@ public class Activities_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolder2)holder).manage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ManageDuties.class);
+                    ListItem listItem = listItems.get(position);
+                    Intent intent = new Intent(context, EditCyclicalDuty.class);
+
+                    intent.putExtra("dutyID",       listItem.getDutyId());
+                    intent.putExtra("dutyName",     listItem.getDuty_name());
+                    intent.putExtra("dutyDesc",     listItem.getDuty_description());
+                    intent.putExtra("dutyForUserID",listItem.getForUserID());
+                    intent.putExtra("dutyMonday",   listItem.getMonday());
+                    intent.putExtra("dutyTuesday",  listItem.getTuesday());
+                    intent.putExtra("dutyWednesday",listItem.getWednesday());
+                    intent.putExtra("dutyThursday", listItem.getThursday());
+                    intent.putExtra("dutyFriday",   listItem.getFriday());
+                    intent.putExtra("dutySaturday", listItem.getSaturday());
+                    intent.putExtra("dutySunday",   listItem.getSunday());
+
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
+                    //Intent intent = new Intent(context, ManageDuties.class);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //context.startActivity(intent);
                 }
             });
 

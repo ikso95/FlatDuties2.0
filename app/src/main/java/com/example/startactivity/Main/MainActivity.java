@@ -88,6 +88,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        //brak mozliwosci cofniecia z main menu
+        //super.onBackPressed();
+    }
 
     //ustawienia menu
     @SuppressWarnings("StatementWithEmptyBody")

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/duty_name_textView_manage_duties"
             android:text="@string/Name"
@@ -23,6 +23,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="100dp"
             />
 
         <android.support.v7.widget.AppCompatImageButton
@@ -34,6 +35,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
             />
 
         <ImageButton
@@ -44,6 +46,7 @@
             android:layout_marginRight="10dp"
             android:layout_alignTop="@+id/cancel_button_manage_duties"
             android:background="@drawable/edit"
+            android:layout_centerVertical="true"
             />
 
     </RelativeLayout>

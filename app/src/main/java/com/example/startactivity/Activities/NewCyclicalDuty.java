@@ -185,25 +185,32 @@ public class NewCyclicalDuty extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog alertDialog = new AlertDialog.Builder(NewCyclicalDuty.this)
-                        .setIcon(R.drawable.alert)
-                        .setTitle("Are you sure to Exit?")
-                        .setMessage("Data will not be saved")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //set what would happen when positive button is clicked
-                                finish();
-                            }
-                        })
+                if(checkInput()==true)
+                {
+                    AlertDialog alertDialog = new AlertDialog.Builder(NewCyclicalDuty.this)
+                            .setIcon(R.drawable.alert)
+                            .setTitle("Are you sure to Exit?")
+                            .setMessage("Data will not be saved")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what would happen when positive button is clicked
+                                    finish();
+                                }
+                            })
 
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //set what should happen when negative button is clicked
-                            }
-                        })
-                        .show();
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what should happen when negative button is clicked
+                                }
+                            })
+                            .show();
+                }
+                else
+                {
+                    finish();
+                }
             }
         });
 

@@ -1,6 +1,8 @@
 package com.example.startactivity.SignIn;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -8,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.startactivity.Activities.NewCyclicalDuty;
 import com.example.startactivity.Add_or_join_group.First_use_add_or_join_group;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Common.VolleySingleton;
@@ -56,6 +60,8 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         setTitle(R.string.Sign_In);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         email = (EditText)findViewById(R.id.email_editText_sign_in);
         password = (EditText)findViewById(R.id.password_editText_sign_in);
@@ -97,6 +103,13 @@ public class SignInActivity extends AppCompatActivity {
                 }
              }});
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     private void isUserRegistered() {

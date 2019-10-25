@@ -18,14 +18,16 @@
 
             <TextView
                 android:id="@+id/duty_name_textView_duty_item3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginRight="70dp"
                 android:background="@android:color/transparent"
                 android:text="Name"
                 android:textSize="20sp"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                />
 
 
             <ImageButton

@@ -1,12 +1,15 @@
 package com.example.startactivity.SignUp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.startactivity.Activities.NewCyclicalDuty;
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.Common.VolleySingleton;
 import com.example.startactivity.Models.BCrypt;
@@ -57,6 +61,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         setTitle(R.string.Sign_Up);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         email = (EditText)findViewById(R.id.email_editText_sign_up);
@@ -111,6 +117,13 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     private void isUserRegistered(final String hashedPassword) {
