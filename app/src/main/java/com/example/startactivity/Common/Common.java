@@ -11,18 +11,19 @@ public class Common {
 
     public static User currentUser;
 
-
-    public static String url="http://192.168.0.178:8888/api/";  //wroclaw
+    public static String url="http://52.57.213.195:8889/api/";  //aws serwer
+    //public static String url="http://192.168.0.178:8888/api/";  //wroclaw
     //public static String url="http://192.168.1.19:8888/api/"; //opole
 
-    public static String img_url="http://192.168.0.178:8888/public/";
+    //public static String img_url="http://192.168.0.178:8888/public/";
 
     public static String getUrl() {
         return url;
     }
+    /*
     public static String getImgUrl() {
         return img_url;
-    }
+    }*/
 
 
 
