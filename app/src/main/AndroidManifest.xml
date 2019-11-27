@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ManageDuties.EditCyclicalDuty"></activity>
+        <activity android:name=".BroadcastReceivers.NoInternetDisplay"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            />
+
+        <receiver
+            android:name=".BroadcastReceivers.NoInternetConnection"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".Activities.ManageDuties.EditCyclicalDuty" />
         <activity android:name=".Activities.ManageDuties.ManageDuties" />
         <activity
             android:name=".Activities.NewCyclicalDuty"
