@@ -16,19 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BroadcastReceivers.NoInternetDisplay"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            />
-
-        <receiver
-            android:name=".BroadcastReceivers.NoInternetConnection"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
 
         <activity android:name=".Activities.ManageDuties.EditCyclicalDuty" />
         <activity android:name=".Activities.ManageDuties.ManageDuties" />
@@ -57,7 +44,8 @@
             android:name=".Main.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".SignUp.SignUpActivity"
             android:configChanges="orientation"
