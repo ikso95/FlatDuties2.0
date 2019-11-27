@@ -21,7 +21,7 @@ import com.example.startactivity.Activities.ManageDuties.ManageDuties;
 import com.example.startactivity.Activities.NewCyclicalDuty;
 import com.example.startactivity.Add_or_join_group.Create_new_group;
 import com.example.startactivity.Add_or_join_group.Join_group;
-import com.example.startactivity.BroadcastReceivers.NoInternetConnection;
+
 import com.example.startactivity.Common.Common;
 import com.example.startactivity.R;
 import com.example.startactivity.Shopping.Shopping_fragment;
@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs_TabLayout_appBarMain);
         tabLayout.setupWithViewPager(mViewPager);
 
-        //for internet connection broadcast receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(new NoInternetConnection(), filter);
 
     }
 
