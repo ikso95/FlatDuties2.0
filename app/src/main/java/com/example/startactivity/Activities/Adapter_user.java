@@ -17,10 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by SQ-OGBE PC on 06/08/2017.
- */
-
 public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> {
 
     private List<User> users = new ArrayList<>();
@@ -56,6 +52,14 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
     }
 
 
+    public void loadForId(SparseBooleanArray itemStateArray) {
+        this.itemStateArray=itemStateArray;
+        notifyDataSetChanged();
+    }
+
+
+
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CheckedTextView mCheckedTextView;
@@ -74,7 +78,6 @@ public class Adapter_user extends RecyclerView.Adapter<Adapter_user.ViewHolder> 
                 mCheckedTextView.setChecked(true);
             }
             mCheckedTextView.setText(users.get(position).getNick());
-
         }
 
         @Override

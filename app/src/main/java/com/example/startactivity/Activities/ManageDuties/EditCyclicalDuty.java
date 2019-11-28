@@ -284,6 +284,8 @@ public class EditCyclicalDuty extends AppCompatActivity {
         dutyFriday = extras.getInt("dutyFriday",0);
         dutySaturday = extras.getInt("dutySaturday",0);
         dutySunday = extras.getInt("dutySunday",0);
+        dutyForUserID = extras.getString("dutyForUserID");
+
 
         duty_name.setText(name);
         duty_description.setText(description);
@@ -308,7 +310,6 @@ public class EditCyclicalDuty extends AppCompatActivity {
         if(dutySunday==1){
             sunday_checkbox.setChecked(true);
         }
-
 
 
     }

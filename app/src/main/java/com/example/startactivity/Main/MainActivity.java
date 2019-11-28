@@ -3,6 +3,7 @@ package com.example.startactivity.Main;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.startactivity.Activities.Activity_fragment;
 import com.example.startactivity.Activities.ManageDuties.ManageDuties;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //tabs and drawer menu
     private SectionsPageAdapter msectionsPageAdapter;
     private ViewPager mViewPager;
-
+    boolean doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -45,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         //drawer implementation
-        DrawerLayout drawer = (DrawerLayout)findViewById(R.id.drawer_layout_main);
-        NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view_main);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view_main);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -54,17 +56,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
         //przypisanie nicku i maila w headerze nav bara
         View header = navigationView.getHeaderView(0);
-        TextView nick = (TextView)header.findViewById(R.id.userNick_header);
+        TextView nick = (TextView) header.findViewById(R.id.userNick_header);
         nick.setText(Common.currentUser.getNick());
-        TextView mail = (TextView)header.findViewById(R.id.userEmail_header);
+        TextView mail = (TextView) header.findViewById(R.id.userEmail_header);
         mail.setText(Common.currentUser.getEmail());
-        TextView groupName = (TextView)header.findViewById(R.id.userGroupName_header);
+        TextView groupName = (TextView) header.findViewById(R.id.userGroupName_header);
         groupName.setText(Common.currentUser.getGroupName());
-
-
 
 
         //tabs settings
@@ -72,28 +71,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mViewPager = (ViewPager) findViewById(R.id.viewPager_main);
         setupViewPager(mViewPager);
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs_TabLayout_appBarMain);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_TabLayout_appBarMain);
         tabLayout.setupWithViewPager(mViewPager);
 
-
     }
-
-
 
 
     //tabs
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Activity_fragment(),"Duties");
-        adapter.addFragment(new Shopping_fragment(),"Shopping");
+        adapter.addFragment(new Activity_fragment(), "Duties");
+        adapter.addFragment(new Shopping_fragment(), "Shopping");
         viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public void onBackPressed() {
-        //brak mozliwosci cofniecia z main menu
-        //super.onBackPressed();
-    }
+
 
     //ustawienia menu
     @SuppressWarnings("StatementWithEmptyBody")
@@ -115,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, Create_new_group.class);
             startActivity(intent);
 
-        }else if (id == R.id.nav_settings_drawer) {
+        } else if (id == R.id.nav_settings_drawer) {
             Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
 
@@ -136,4 +128,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
 }
